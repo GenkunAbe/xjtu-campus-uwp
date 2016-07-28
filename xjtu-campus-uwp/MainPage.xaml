@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="xjtu_campus_uwp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:xjtu_campus_uwp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:xjtu_campus_uwp.Models"
+    mc:Ignorable="d">
+    
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Background="#5db754" Margin="0,0,0,0" Grid.Row="0">
+            <TextBlock Name="Logo"
+                       FontSize="26" 
+                       FontFamily="Microsoft YaHei UI" 
+                       Foreground="White" 
+                       Text="XJTU Campus"
+                       Margin="12,10,0,10"/>
+        </StackPanel>
+
+        <Pivot Grid.Row="1">
+            
+            
+            <PivotItem Header="HOME">
+                <Frame Name="HomeFrame"></Frame>
+            </PivotItem>
+
+            <PivotItem Header="NEWS">
+                <Frame Name="NewsFrame"/>
+            </PivotItem>
+
+            <PivotItem Header="LIBRARY">
+                <Frame Name="LibraryFrame" />
+            </PivotItem>
+
+            <PivotItem Header="GRADE">
+                <Frame Name="GradeFrame" />
+            </PivotItem>
+            
+            <PivotItem Header="CARD">
+                <Frame Name="CardFrame" />
+            </PivotItem>
+        </Pivot>
+
+        
+    </Grid>
+</Page>
