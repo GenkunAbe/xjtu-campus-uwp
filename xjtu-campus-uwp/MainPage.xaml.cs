@@ -21,20 +21,17 @@ namespace xjtu_campus_uwp
 
     public sealed partial class MainPage : Page
     {
-        
-
         public MainPage()
         {
             this.InitializeComponent();
             
             HomeFrame.Navigate(typeof (HomePage));
             NewsFrame.Navigate(typeof (NewsPage));
+            TableFrame.Navigate(typeof (TablePage));
             LibraryFrame.Navigate(typeof (NewsPage));
             GradeFrame.Navigate(typeof (GradePage));
             CardFrame.Navigate(typeof (CardPage));
 
-        }
-
-        
+        }       
     }
 }

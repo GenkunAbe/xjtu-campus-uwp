@@ -24,15 +24,18 @@
                        Margin="12,10,0,10"/>
         </StackPanel>
 
-        <Pivot Grid.Row="1">
-            
-            
+        <Pivot Grid.Row="1" Background="White">
+
             <PivotItem Header="HOME">
                 <Frame Name="HomeFrame"></Frame>
             </PivotItem>
 
             <PivotItem Header="NEWS">
                 <Frame Name="NewsFrame"/>
+            </PivotItem>
+            
+            <PivotItem Header="TABLE">
+                <Frame Name="TableFrame"/>
             </PivotItem>
 
             <PivotItem Header="LIBRARY">
@@ -42,12 +45,11 @@
             <PivotItem Header="GRADE">
                 <Frame Name="GradeFrame" />
             </PivotItem>
-            
+
             <PivotItem Header="CARD">
                 <Frame Name="CardFrame" />
             </PivotItem>
         </Pivot>
-
         
     </Grid>
 </Page>

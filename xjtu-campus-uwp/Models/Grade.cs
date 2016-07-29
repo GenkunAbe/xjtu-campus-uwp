@@ -27,21 +27,7 @@ namespace xjtu_campus_uwp.Models
     {
         public static async Task<ObservableCollection<Grade>> GetGrades()
         {
-            Uri uri = new Uri("http://202.117.14.143:12000/grade?usr=genkunabe&psw=Lyx@xjtu120");
-            HttpClient httpClient = new HttpClient();
-            
-            HttpResponseMessage response = new HttpResponseMessage();
-
-            string result = "";
-            try
-            {
-                response = await httpClient.GetAsync(uri);
-                result = await response.Content.ReadAsStringAsync();
-            }
-            catch (Exception)
-            {
-                result = "Error!";
-            }
+            string result = await HttpHelper.GetResponse("http://202.117.14.143:12000/grade?usr=genkunabe&psw=Lyx@xjtu120");
 
             JsonArray lines = JsonArray.Parse(result);
 
@@ -52,11 +38,11 @@ namespace xjtu_campus_uwp.Models
                 JsonArray items = JsonArray.Parse(line.ToString());
                 JsonArray scores = JsonArray.Parse(items[5].ToString());
                 Grade grade = new Grade(items[2].GetString(), scores[0].GetString());
-                System.Diagnostics.Debug.Write(items[2].GetString() + "\n");
+                // System.Diagnostics.Debug.Write(items[2].GetString() + "\n");
                 grades.Add(grade);
             }
 
-            System.Diagnostics.Debug.Write("OK");
+            // System.Diagnostics.Debug.Write("OK");
             return grades;
         }
     }

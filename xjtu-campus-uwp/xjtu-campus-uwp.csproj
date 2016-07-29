@@ -95,6 +95,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\HttpHelper.cs" />
+    <Compile Include="Models\Table.cs" />
     <Compile Include="Views\CardPage.xaml.cs">
       <DependentUpon>CardPage.xaml</DependentUpon>
     </Compile>
@@ -117,6 +119,9 @@
     </Compile>
     <Compile Include="Views\NewsPage.xaml.cs">
       <DependentUpon>NewsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TablePage.xaml.cs">
+      <DependentUpon>TablePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +204,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NewsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TablePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
