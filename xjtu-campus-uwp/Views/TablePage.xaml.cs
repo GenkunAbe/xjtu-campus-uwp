@@ -22,19 +22,21 @@ namespace xjtu_campus_uwp.Views
 {
     public sealed partial class TablePage : Page
     {
-        private Table NowTable;
+        private ObservableCollection<Course> Courses;
         public TablePage()
         {
             this.InitializeComponent();
-            //NowTable = new Table();
-            GetTables();
+            Courses = TableManager.GetInitCourses();
+
+            GetCourses();
 
             
             
         }
-        private async void GetTables()
+        private async void GetCourses()
         {
-            NowTable = await TableManager.GetTable(2);
+
+            Courses = await TableManager.GetCourse(2);
 
             for (int i = 0; i < 25; ++i)
             {
@@ -45,8 +47,7 @@ namespace xjtu_campus_uwp.Views
                 textBlock.Style = TextBlockTileStyle;
                 grid.Style = GridTileStyle;
 
-                textBlock.Text = NowTable.courses[i / 5, i % 5].Double != -1 ?
-                    NowTable.courses[i / 5, i % 5].Name : "";
+                textBlock.Text = Courses[i].Name;
                 
                 grid.Children.Add(textBlock);
                 TableGrid.Children.Add(grid);

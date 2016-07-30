@@ -23,11 +23,13 @@ namespace xjtu_campus_uwp.Models
         }
     }
 
+
+
     class GradeManager
     {
         public static async Task<ObservableCollection<Grade>> GetGrades()
         {
-            string result = await HttpHelper.GetResponse("http://202.117.14.143:12000/grade?usr=genkunabe&psw=Lyx@xjtu120");
+            string result = await HttpHelper.GetResponse("http://192.168.0.103:12000/grade?usr=genkunabe&psw=Lyx@xjtu120");
 
             JsonArray lines = JsonArray.Parse(result);
 

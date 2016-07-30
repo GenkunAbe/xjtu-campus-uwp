@@ -29,94 +29,53 @@ namespace xjtu_campus_uwp.Models
 
         public Course()
         {
+            Name = "";
+            Teacher = "";
+            StartWeek = -1;
+            EndWeek = -1;
+            Day = "";
+            StartTime = -1;
+            EndTime = -1;
+            Place = "";
             Double = -1;
         }
 
         public string Name { get; set; }
-
         public string Teacher { get; set; }
-
         public int StartWeek { get; set; }
-
         public int EndWeek { get; set; }
-
         public string Day { get; set; }
-
         public int StartTime { get; set; }
-
         public int EndTime { get; set; }
-
         public string Place { get; set; }
-
         public int Double { get; set; }
-    }
-
-    class Table
-    {
-        public Course[,] courses;
-        public int _Now;
-
-        public Table()
+        public int GetDay()
         {
-            _Now = 1;
-            courses = new Course[5,5];
-            for (int i = 0; i < 5; ++i)
-            {
-                for (int j = 0; j < 5; ++j)
-                {
-                    courses[i, j] = new Course();
-                }
-            }
-        }
-
-        public Table(int Now, ObservableCollection<Course> list)
-        {
-            courses = new Course[5,5];
-            for (int i = 0; i < 5; ++i)
-            {
-                for (int j = 0; j < 5; ++j)
-                {
-                    courses[i, j] = new Course();
-                }
-            }
-            _Now = Now;
-            foreach (var course in list)
-            {
-                if (course.Double != -1 && Now >= course.StartWeek && Now <= course.EndWeek)
-                {
-                    if ((course.Double == 1 && _Now % 2 == 0) || (course.Double == 2 && _Now % 2 == 1))
-                        continue;
-                    courses[GetDay(course.Day), course.StartTime/2] = course;
-                }
-            }
-        }
-
-        private static int GetDay(string s)
-        {
-            int a = 0;
-            switch (s)
+            int day = -1;
+            switch (Day)
             {
                 case "周一":
-                    a = 0; break;
+                    day = 0; break;
                 case "周二":
-                    a = 1; break;
+                    day = 1; break;
                 case "周三":
-                    a = 2; break;
+                    day = 2; break;
                 case "周四":
-                    a = 3; break;
+                    day = 3; break;
                 case "周五":
-                    a = 4; break;
+                    day = 4; break;
             }
-            return a;
+            return day;
         }
     }
+
 
     class TableManager
     {
         public static async Task<ObservableCollection<Course>> GetCourse()
         {
 
-            string result = await HttpHelper.GetResponse("http://202.117.14.143:12000/table?usr=genkunabe&psw=Lyx@xjtu120");
+            string result = await HttpHelper.GetResponse("http://192.168.0.103:12000/table?usr=genkunabe&psw=Lyx@xjtu120");
 
             ObservableCollection<Course> courses = new ObservableCollection<Course>();
             JsonArray divs = JsonArray.Parse(result);
@@ -126,18 +85,34 @@ namespace xjtu_campus_uwp.Models
                 Course course = new Course(infos);
                 courses.Add(course);
             }
-
-            System.Diagnostics.Debug.Write("GetCourse OK\n");
-
             return courses;
         }
 
-        public static async Task<Table> GetTable(int week = 1)
+        public static async Task<ObservableCollection<Course>> GetCourse(int now)
         {
-            ObservableCollection<Course> courses = await GetCourse();
-            Table table = new Table(week, courses);
-            System.Diagnostics.Debug.Write("GetTable OK\n");
-            return table;
+            Course[,] tmpCourses = new Course[5, 5];
+            ObservableCollection<Course> rawCourse = await GetCourse();
+
+            foreach (Course course in rawCourse)
+            {
+                if (course.Double == -1 || now < course.StartWeek || now > course.EndWeek) continue;
+                if ((course.Double == 1 && now % 2 == 0) || (course.Double == 2 && now % 2 == 1)) continue;
+                tmpCourses[course.GetDay(), course.StartTime / 2] = course;
+            }
+            ObservableCollection<Course> courses = new ObservableCollection<Course>();
+            for (int i = 0; i < 5; ++i)
+                for (int j = 0; j < 5; ++j)
+                    courses.Add(tmpCourses[i, j] ?? new Course());
+            return courses;
+        }
+
+        public static ObservableCollection<Course> GetInitCourses()
+        {
+            ObservableCollection<Course> courses = new ObservableCollection<Course>();
+            for (int i = 0; i < 25; ++i)
+                courses.Add(new Course());
+            return courses;
         } 
+
     }
 }

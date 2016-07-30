@@ -8,6 +8,56 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Row="0" Margin="70,70,70,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Password: " Margin="0,0,10,0"/>
+            <PasswordBox Grid.Column="1" Name="PasswordTextBox" Margin="10,0,0,0" MaxLength="6">
+                <PasswordBox.InputScope>
+                    <InputScope>
+                        <InputScope.Names>
+                            <InputScopeName NameValue="NumericPin"></InputScopeName>
+                        </InputScope.Names>
+                    </InputScope>
+                </PasswordBox.InputScope>
+            </PasswordBox>
+        </Grid>
+
+        <Grid Row="1" Margin="70,0,70,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Amount: " Margin="0,0,18,0"/>
+            <TextBox Grid.Column="1" Name="AmtTextBox" Margin="10,0,0,0" InputScope="Digits"/>
+        </Grid>
+
+        <Grid Row="2" Margin="70,0,70,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Name="CaptchaImg" Width="60" Height="20" HorizontalAlignment="Center" Margin="0,0,15,0" Tapped="Captcha_Tapped"/>
+            <TextBox Grid.Column="1" Name="CodeTextBox" Margin="10,0,0,0" InputScope="Number"/>
+        </Grid>
+
+        <Grid Row="3"  Margin="70,0,70,20">
+            <Button Name="SubmitButton" Width="Auto" FontSize="14" Content="Submit" HorizontalAlignment="Center" Click="SubmitButton_OnClick"/>
+        </Grid>
+
+        <Grid Row="4"  Margin="70,0,70,20">
+            <TextBlock Name="ResultTextBlock" Width="Auto" FontSize="14" HorizontalAlignment="Center" Text=""/>
+        </Grid>
 
     </Grid>
 </Page>

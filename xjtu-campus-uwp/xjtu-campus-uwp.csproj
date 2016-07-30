@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\HttpHelper.cs" />
+    <Compile Include="Models\Library.cs" />
     <Compile Include="Models\Table.cs" />
     <Compile Include="Views\CardPage.xaml.cs">
       <DependentUpon>CardPage.xaml</DependentUpon>

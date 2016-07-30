@@ -5,6 +5,7 @@
     xmlns:local="using:xjtu_campus_uwp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:xjtu_campus_uwp.Models"
     mc:Ignorable="d">
     
     <Page.Resources>
@@ -22,7 +23,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Name="MainGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -34,7 +35,7 @@
         </Grid.ColumnDefinitions>
         
         <Grid Row="0" Column="0">
-            <TextBlock FontSize="15" Text="1st" Margin="10,10,10,10"/>
+            <TextBlock FontSize="15" Text="123" Margin="10,10,10,10"/>
         </Grid>
         
         <Grid Row="0" Column="1" Margin="3,3,3,3">
@@ -61,7 +62,7 @@
                 <TextBlock Text="5" VerticalAlignment="Center" TextAlignment="Center"/>
             </Grid>
         </Grid>
-        
+
         <Grid Row="1" Column="0" Margin="3,3,3,3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -86,7 +87,7 @@
                 <TextBlock Text="5" VerticalAlignment="Center" TextAlignment="Center"/>
             </Grid>
         </Grid>
-        
+
         <Grid Name="TableGrid" Row="1" Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -102,15 +103,15 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
         </Grid>
-        
+
         <Grid Row="2" ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="" FontSize="30" />
+            <TextBlock Text="" FontSize="30"/>
         </Grid>
-        
+
     </Grid>
 </Page>
