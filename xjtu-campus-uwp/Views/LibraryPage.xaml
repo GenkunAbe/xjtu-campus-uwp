@@ -14,24 +14,23 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Row="0">
-            <ListView ItemsSource="{x:Bind BookList}">
+            <ListView Name="BookGlanceListView" ItemsSource="{x:Bind BookList}" IsItemClickEnabled="True" ItemClick="BookGlanceItem_OnClick">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:BookGlance">
                         <RelativePanel>
                             <TextBlock Name="BookName" Text="{x:Bind Name}" />
-                            <TextBlock RelativePanel.RightOf="BookName" Text="{x:Bind Link}"/>
                         </RelativePanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <Grid Row="1">
+        <Grid Row="1" Margin="0,10,0,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid Column="0">
-                <TextBox Name="SearchTextBlock" FontSize="16" GotFocus="SearchTextBlock_GetFocus"></TextBox>
+                <TextBox Name="SearchTextBlock" FontSize="16"></TextBox>
             </Grid>
             <Grid Column="1">
                 <Button Name="SearchButton" Content="Search" FontSize="16" Click="SearchButton_OnClick"/>

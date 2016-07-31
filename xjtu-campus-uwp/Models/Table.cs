@@ -75,7 +75,7 @@ namespace xjtu_campus_uwp.Models
         public static async Task<ObservableCollection<Course>> GetCourse()
         {
 
-            string result = await HttpHelper.GetResponse("http://192.168.0.103:12000/table?usr=genkunabe&psw=Lyx@xjtu120");
+            string result = await HttpHelper.GetResponse("http://202.117.14.143:12000/table?usr=genkunabe&psw=Lyx@xjtu120");
 
             ObservableCollection<Course> courses = new ObservableCollection<Course>();
             JsonArray divs = JsonArray.Parse(result);

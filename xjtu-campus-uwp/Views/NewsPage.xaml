@@ -5,9 +5,23 @@
     xmlns:local="using:xjtu_campus_uwp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:xjtu_campus_uwp.Models"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Row="0">
+            <ListView Name="NewsGlanceListView" ItemsSource="{x:Bind NewsList}" IsItemClickEnabled="True" ItemClick="NewsListItem_OnClick">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:NewsGlance">
+                        <RelativePanel>
+                            <TextBlock Name="NewsTitle" Text="{x:Bind Title}" />
+                        </RelativePanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>

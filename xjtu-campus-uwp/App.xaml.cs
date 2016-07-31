@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -38,7 +39,8 @@ namespace xjtu_campus_uwp
                 SplashPage splashPage = new SplashPage(e);
 
                 Window.Current.Content = splashPage;
-                
+
+
             }
 
             Window.Current.Activate();

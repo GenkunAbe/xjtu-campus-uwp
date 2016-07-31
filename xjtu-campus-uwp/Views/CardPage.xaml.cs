@@ -29,7 +29,7 @@ namespace xjtu_campus_uwp.Views
 
         private async void LoadCaptcha()
         {
-            string uri = "http://192.168.0.103:12000/cardpre?usr=genkunabe&psw=Lyx@xjtu120";
+            string uri = "http://202.117.14.143:12000/cardpre?usr=genkunabe&psw=Lyx@xjtu120";
             BitmapImage bitmap = await HttpHelper.GetImage(uri);
             CaptchaImg.Source = bitmap;
         }
@@ -39,7 +39,7 @@ namespace xjtu_campus_uwp.Views
             string raw_psw = PasswordTextBox.Password;
             string amt = AmtTextBox.Text;
             string code = CodeTextBox.Text;
-            string uri = "http://192.168.0.103:12000/cardpost?usr=genkunabe&psw=Lyx@xjtu120&rawpsw=" + raw_psw +
+            string uri = "http://202.117.14.143:12000/cardpost?usr=genkunabe&psw=Lyx@xjtu120&rawpsw=" + raw_psw +
                          "&code=" + code + "&amt=" + amt;
             Pay(uri);
         }

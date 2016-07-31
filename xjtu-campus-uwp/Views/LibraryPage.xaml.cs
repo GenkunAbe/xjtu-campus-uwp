@@ -24,21 +24,40 @@ namespace xjtu_campus_uwp.Views
         public LibraryPage()
         {
             this.InitializeComponent();
+            this.NavigationCacheMode = NavigationCacheMode.Required;
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+
         }
 
-        private async void GetGlanceList()
-        {
-            BookList = await LibraryManager.GetBookGlanceList(SearchTextBlock.Text);
-        }
-
-        private void SearchTextBlock_GetFocus(object sender, RoutedEventArgs e)
+        private void App_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
         {
 
+            // Navigate back if possible, and if the event has not 
+            // already been handled .
+            if (Frame.CanGoBack && e.Handled == false)
+            {
+                e.Handled = true;
+                Frame.GoBack();
+            }
         }
+
+        private async void GetGlanceList(string arg)
+        {
+            BookList = await LibraryManager.GetBookGlanceList(arg);
+            BookGlanceListView.ItemsSource = BookList;
+        }
+
+        
 
         private void SearchButton_OnClick(object sender, RoutedEventArgs e)
         {
-            GetGlanceList();
+            GetGlanceList(SearchTextBlock.Text);
+        }
+
+        private void BookGlanceItem_OnClick(object sender, ItemClickEventArgs e)
+        {
+            BookGlance book = (BookGlance) e.ClickedItem;
+            Frame.Navigate(typeof(BookDetailPage), book.Link);
         }
     }
 }

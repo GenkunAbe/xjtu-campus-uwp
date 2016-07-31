@@ -14,24 +14,31 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using xjtu_campus_uwp.Models;
-using xjtu_campus_uwp.Views;
 
-namespace xjtu_campus_uwp
+namespace xjtu_campus_uwp.Views
 {
 
-    public sealed partial class MainPage : Page
+    public sealed partial class BookDetailPage : Page
     {
-        public MainPage()
+        private ObservableCollection<BookDetail> Books;
+        public BookDetailPage()
         {
             this.InitializeComponent();
             
-            HomeFrame.Navigate(typeof (HomePage));
-            NewsFrame.Navigate(typeof (NewsPage));
-            TableFrame.Navigate(typeof (TablePage));
-            LibraryFrame.Navigate(typeof (LibraryPage));
-            GradeFrame.Navigate(typeof (GradePage));
-            CardFrame.Navigate(typeof (CardPage));
+        }
 
-        }       
+        protected override void OnNavigatedTo (NavigationEventArgs e)
+        {
+            string link = (string) e.Parameter;
+            GetDetail(link);
+            
+        }
+
+        private async void GetDetail(string link)
+        {
+            Books = await LibraryManager.GetBookDetail(link);
+            BookDetailList.ItemsSource = Books;
+        }
+
     }
 }
