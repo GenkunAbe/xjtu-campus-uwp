@@ -19,17 +19,28 @@ namespace xjtu_campus_uwp.Views
 {
     public sealed partial class GradePage : Page
     {
-        private ObservableCollection<Grade> Grades = new ObservableCollection<Grade>();
+        private ObservableCollection<Grade> Grades;
+        private GradeManager _GradeManager;
         public GradePage()
         {
             this.InitializeComponent();
-            GetGrades();
+            Grades = new ObservableCollection<Grade>();
+            _GradeManager = new GradeManager();
+            GetStoredGrade();
         }
 
-        private async void GetGrades()
+        private async void GetStoredGrade()
         {
-            Grades = await GradeManager.GetGrades();
+            Grades = await _GradeManager.GetStoredGrades();
             ScoreListView.ItemsSource = Grades;
         }
+
+        public async void GetNewGrades()
+        {
+            Grades = await _GradeManager.GetNewGrades();
+            ScoreListView.ItemsSource = Grades;
+            _GradeManager.Save();
+        }
+
     }
 }

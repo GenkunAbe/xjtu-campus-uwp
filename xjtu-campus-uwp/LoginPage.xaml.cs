@@ -58,6 +58,8 @@ namespace xjtu_campus_uwp
             if (result)
             {
                 dialog.Content = "Login Success!";
+                App.NetId = usr;
+                App.Psw = psw;
                 await Task.Delay(1000);
                 dialog.Hide();
 

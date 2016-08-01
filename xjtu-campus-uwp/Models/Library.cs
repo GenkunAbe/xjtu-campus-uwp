@@ -67,7 +67,7 @@ namespace xjtu_campus_uwp.Models
     {
         public static async Task<ObservableCollection<BookGlance>> GetBookGlanceList(string arg)
         {
-            string uri = "http://202.117.14.143:12000/booksearch?arg=" + arg;
+            string uri = App.Host + "booksearch?arg=" + arg;
             string result = await HttpHelper.GetResponse(uri);
 
             ObservableCollection<BookGlance> list = new ObservableCollection<BookGlance>();

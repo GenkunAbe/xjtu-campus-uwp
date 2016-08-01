@@ -31,7 +31,7 @@ namespace xjtu_campus_uwp.Models
     {
         public static async Task<ObservableCollection<NewsGlance>> GetNewsList()
         {
-            string uri = "http://202.117.14.143:12000/news";
+            string uri = App.Host + "news";
             string result = await HttpHelper.GetResponse(uri);
 
             JsonArray lines = JsonArray.Parse(result);

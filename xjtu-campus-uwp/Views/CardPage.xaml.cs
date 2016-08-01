@@ -24,7 +24,6 @@ namespace xjtu_campus_uwp.Views
         {
             this.InitializeComponent();
             LoadCaptcha();
-
         }
 
         private async void LoadCaptcha()
@@ -39,7 +38,7 @@ namespace xjtu_campus_uwp.Views
             string rawPsw = PasswordTextBox.Password;
             string amt = AmtTextBox.Text;
             string code = CodeTextBox.Text;
-            string uri = "http://202.117.14.143:12000/cardpost?usr=genkunabe&psw=Lyx@xjtu120&rawpsw=" + rawPsw +
+            string uri = App.Host + "cardpost?usr=" + App.NetId + "&psw=" + App.Psw + "&rawpsw=" + rawPsw +
                          "&code=" + code + "&amt=" + amt;
             Pay(uri);
         }
@@ -51,6 +50,11 @@ namespace xjtu_campus_uwp.Views
         }
 
         private void Captcha_Tapped (object sender, TappedRoutedEventArgs e)
+        {
+            LoadCaptcha();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             LoadCaptcha();
         }

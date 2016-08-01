@@ -23,21 +23,30 @@ namespace xjtu_campus_uwp.Views
     public sealed partial class TablePage : Page
     {
         private ObservableCollection<Course> Courses;
+        private TableManager _TableManager;
         public TablePage()
         {
             this.InitializeComponent();
-            Courses = TableManager.GetInitCourses();
-
-            GetCourses();
-
             
-            
+            _TableManager = new TableManager();
+
+            GetStoredCourses();
         }
-        private async void GetCourses()
+
+        private async void GetStoredCourses()
         {
+            Courses = await _TableManager.GetCoursesList(2, false);
+            SetCourses();
+        }
 
-            Courses = await TableManager.GetCourse(2);
+        private async void GetNewCourses()
+        {
+            Courses = await _TableManager.GetCoursesList(2, true);
+            SetCourses();
+        }
 
+        private void SetCourses()
+        {
             for (int i = 0; i < 25; ++i)
             {
 
@@ -48,7 +57,7 @@ namespace xjtu_campus_uwp.Views
                 grid.Style = GridTileStyle;
 
                 textBlock.Text = Courses[i].Name;
-                
+
                 grid.Children.Add(textBlock);
                 TableGrid.Children.Add(grid);
 

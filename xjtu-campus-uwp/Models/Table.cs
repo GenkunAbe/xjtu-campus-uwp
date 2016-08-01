@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Json;
+using Windows.Storage;
 
 namespace xjtu_campus_uwp.Models
 {
@@ -72,26 +74,28 @@ namespace xjtu_campus_uwp.Models
 
     class TableManager
     {
-        public static async Task<ObservableCollection<Course>> GetCourse()
+
+        private string RawCourse;
+        private ObservableCollection<Course> Courses;
+
+        public TableManager()
         {
-
-            string result = await HttpHelper.GetResponse("http://202.117.14.143:12000/table?usr=genkunabe&psw=Lyx@xjtu120");
-
-            ObservableCollection<Course> courses = new ObservableCollection<Course>();
-            JsonArray divs = JsonArray.Parse(result);
-            foreach (var div in divs)
-            {
-                JsonArray infos = JsonArray.Parse(div.ToString());
-                Course course = new Course(infos);
-                courses.Add(course);
-            }
-            return courses;
+            RawCourse = "";
+            Courses = new ObservableCollection<Course>();
         }
 
-        public static async Task<ObservableCollection<Course>> GetCourse(int now)
+        public async Task<ObservableCollection<Course>> GetCoursesList(int now, bool isNew)
         {
+            
+
             Course[,] tmpCourses = new Course[5, 5];
-            ObservableCollection<Course> rawCourse = await GetCourse();
+            ObservableCollection<Course> rawCourse = new ObservableCollection<Course>();
+            if (isNew)
+                rawCourse = await GetNewRawCourses();
+            else
+                rawCourse = await GetStoredRawCourses();
+
+            if (RawCourse == "") return GetInitCourses();
 
             foreach (Course course in rawCourse)
             {
@@ -99,10 +103,74 @@ namespace xjtu_campus_uwp.Models
                 if ((course.Double == 1 && now % 2 == 0) || (course.Double == 2 && now % 2 == 1)) continue;
                 tmpCourses[course.GetDay(), course.StartTime / 2] = course;
             }
-            ObservableCollection<Course> courses = new ObservableCollection<Course>();
+
             for (int i = 0; i < 5; ++i)
                 for (int j = 0; j < 5; ++j)
-                    courses.Add(tmpCourses[i, j] ?? new Course());
+                    Courses.Add(tmpCourses[i, j] ?? new Course());
+            return Courses;
+        }
+
+
+        private async Task<ObservableCollection<Course>> GetNewRawCourses()
+        {
+            string uri = App.Host + "table?usr=" + App.NetId + "&psw=" + App.Psw;
+            RawCourse = await HttpHelper.GetResponse(uri);
+
+
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile tableFile;
+            try
+            {
+                tableFile = await folder.GetFileAsync("table");
+            }
+            catch (Exception)
+            {
+                tableFile = await folder.CreateFileAsync("table");
+            }
+
+            try
+            {
+                await FileIO.WriteTextAsync(tableFile, RawCourse);
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Write Table File Failed!");
+            }
+
+
+            return JsonCourseParser();
+        }
+
+        private async Task<ObservableCollection<Course>> GetStoredRawCourses()
+        {
+            try
+            {
+                StorageFolder folder = ApplicationData.Current.LocalFolder;
+                StorageFile tableFile = await folder.GetFileAsync("table");
+                RawCourse = await FileIO.ReadTextAsync(tableFile);
+            }
+            catch (Exception)
+            {
+                RawCourse = "";
+                Debug.WriteLine("Open Stored Table Failed!");
+            }
+            return JsonCourseParser();
+        }
+
+        
+        private ObservableCollection<Course> JsonCourseParser()
+        {
+            ObservableCollection<Course> courses = new ObservableCollection<Course>();
+
+            if (RawCourse == "") return courses;
+
+            JsonArray divs = JsonArray.Parse(RawCourse);            
+            foreach (var div in divs)
+            {
+                JsonArray infos = JsonArray.Parse(div.ToString());
+                Course course = new Course(infos);
+                courses.Add(course);
+            }
             return courses;
         }
 

@@ -14,7 +14,7 @@ namespace xjtu_campus_uwp.Models
 
         public static async Task<bool> LoginAutheticate(string netId, string psw)
         {
-            string uri = "http://202.117.14.143:12000/auth?usr=" + netId + "&psw=" + psw;
+            string uri = App.Host + "auth?usr=" + netId + "&psw=" + psw;
             string result = await HttpHelper.GetResponse(uri);
             JsonArray arr = JsonArray.Parse(result);
             string auth = arr[0].GetString();

@@ -33,11 +33,11 @@
             <ColumnDefinition Width="*" MaxWidth="100"/>
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
-        
+
         <Grid Row="0" Column="0">
             <TextBlock FontSize="15" Text="123" Margin="10,10,10,10"/>
         </Grid>
-        
+
         <Grid Row="0" Column="1" Margin="3,3,3,3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -113,5 +113,7 @@
             <TextBlock Text="" FontSize="30"/>
         </Grid>
 
+
     </Grid>
+
 </Page>

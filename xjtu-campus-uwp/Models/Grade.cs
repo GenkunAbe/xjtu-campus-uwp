@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.Web.Http;
 using System.Runtime.Serialization.Json;
 using Windows.Data.Json;
+using Windows.Storage;
 
 namespace xjtu_campus_uwp.Models
 {
@@ -27,25 +29,88 @@ namespace xjtu_campus_uwp.Models
 
     class GradeManager
     {
-        public static async Task<ObservableCollection<Grade>> GetGrades()
+
+        private string RawGrades;
+        private ObservableCollection<Grade> Grades;
+
+        public GradeManager()
         {
-            string result = await HttpHelper.GetResponse("http://202.117.14.143:12000/grade?usr=genkunabe&psw=Lyx@xjtu120");
+            RawGrades = "";
+            Grades = new ObservableCollection<Grade>();
+        }
 
-            JsonArray lines = JsonArray.Parse(result);
-
-            ObservableCollection<Grade> grades = new ObservableCollection<Grade>();
-
-            foreach (IJsonValue line in lines)
+        public async Task<ObservableCollection<Grade>> GetNewGrades()
+        {
+            try
             {
-                JsonArray items = JsonArray.Parse(line.ToString());
-                JsonArray scores = JsonArray.Parse(items[5].ToString());
-                Grade grade = new Grade(items[2].GetString(), scores[0].GetString());
-                // System.Diagnostics.Debug.Write(items[2].GetString() + "\n");
-                grades.Add(grade);
+                string uri = App.Host + "grade?usr=" + App.NetId + "&psw=" + App.Psw;
+                RawGrades = await HttpHelper.GetResponse(uri);
             }
+            catch (Exception)
+            {
+                RawGrades = "";
+                Debug.WriteLine("GetNewGrade Failed!");
+            }
+            JsonGradeParser();
+            return Grades;
+        }
 
-            // System.Diagnostics.Debug.Write("OK");
-            return grades;
+        public async Task<ObservableCollection<Grade>> GetStoredGrades()
+        {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            try
+            {
+                StorageFile gradeFile = await folder.GetFileAsync("grade");
+                RawGrades = await FileIO.ReadTextAsync(gradeFile);
+                JsonGradeParser();
+                return Grades;
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("No Stored Grade!");
+            }
+            return new ObservableCollection<Grade>();
+        }
+
+        public async void Save()
+        {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile gradeFile;
+            try
+            {
+                gradeFile = await folder.GetFileAsync("grade");
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("No Grade File, Create it");
+                gradeFile = await folder.CreateFileAsync("grade");
+            }
+            try
+            {
+                await FileIO.WriteTextAsync(gradeFile, RawGrades);
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Write Grade File Failed!");
+            }
+        }
+
+        private void JsonGradeParser()
+        {
+            if (RawGrades != "")
+            {
+                Grades = new ObservableCollection<Grade>();
+                JsonArray lines = JsonArray.Parse(RawGrades);
+
+                foreach (IJsonValue line in lines)
+                {
+                    JsonArray items = JsonArray.Parse(line.ToString());
+                    JsonArray scores = JsonArray.Parse(items[5].ToString());
+                    Grade grade = new Grade(items[2].GetString(), scores[0].GetString());
+                    // System.Diagnostics.Debug.Write(items[2].GetString() + "\n");
+                    Grades.Add(grade);
+                }
+            }
         }
     }
 }

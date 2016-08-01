@@ -21,6 +21,9 @@ namespace xjtu_campus_uwp
 
     sealed partial class App : Application
     {
+        public static string NetId;
+        public static string Psw;
+        public static string Host = "http://202.117.14.143:12000/";
 
         public App()
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -57,5 +58,101 @@ namespace xjtu_campus_uwp
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = ((Frame)sender).CanGoBack ?
                 AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
         }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            switch (MainPivot.SelectedIndex)
+            {
+                case 0:
+                    GradeFrame.Navigate(typeof(HomePage));
+                    break;
+                case 1:
+                    GradeFrame.Navigate(typeof(NewsPage));
+                    break;
+                case 2:
+                    GradeFrame.Navigate(typeof(TablePage));
+                    break;
+                case 3:
+                    GradeFrame.Navigate(typeof(LibraryPage));
+                    break;
+                case 4:
+                    GradeFrame.Navigate(typeof(GradePage));
+                    break;
+                case 5:
+                    GradeFrame.Navigate(typeof(CardPage));
+                    break;
+            }
+        }
+
+        private void Gpa_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MyBook_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Account_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Pivot_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (((Pivot)sender).SelectedIndex)
+            {
+                case 0:
+                    Refresh.Visibility = Visibility.Visible;
+                    Gpa.Visibility = Visibility.Collapsed;
+                    Add.Visibility = Visibility.Collapsed;
+                    MyBook.Visibility = Visibility.Collapsed;
+                    Account.Visibility = Visibility.Collapsed;
+                    break;
+                case 1:
+                    Refresh.Visibility = Visibility.Visible;
+                    Gpa.Visibility = Visibility.Collapsed;
+                    Add.Visibility = Visibility.Collapsed;
+                    MyBook.Visibility = Visibility.Collapsed;
+                    Account.Visibility = Visibility.Collapsed;
+                    break;
+                case 2:
+                    Refresh.Visibility = Visibility.Visible;
+                    Gpa.Visibility = Visibility.Collapsed;
+                    Add.Visibility = Visibility.Visible;
+                    MyBook.Visibility = Visibility.Collapsed;
+                    Account.Visibility = Visibility.Collapsed;
+                    break;
+                case 3:
+                    Refresh.Visibility = Visibility.Visible;
+                    Gpa.Visibility = Visibility.Collapsed;
+                    Add.Visibility = Visibility.Collapsed;
+                    MyBook.Visibility = Visibility.Visible;
+                    Account.Visibility = Visibility.Collapsed;
+                    break;
+                case 4:
+                    Refresh.Visibility = Visibility.Visible;
+                    Gpa.Visibility = Visibility.Visible;
+                    Add.Visibility = Visibility.Collapsed;
+                    MyBook.Visibility = Visibility.Collapsed;
+                    Account.Visibility = Visibility.Collapsed;
+                    break;
+                case 5:
+                    Refresh.Visibility = Visibility.Visible;
+                    Gpa.Visibility = Visibility.Collapsed;
+                    Add.Visibility = Visibility.Collapsed;
+                    MyBook.Visibility = Visibility.Collapsed;
+                    Account.Visibility = Visibility.Visible;
+                    break;
+            }
+        }
+
+        
     }
 }
