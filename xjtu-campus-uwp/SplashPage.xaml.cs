@@ -10,6 +10,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
@@ -34,6 +35,8 @@ namespace xjtu_campus_uwp
 
         private async void Page_Loaded(object sender, LaunchActivatedEventArgs e)
         {
+
+            
 
             // 针对mobile
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
@@ -61,12 +64,16 @@ namespace xjtu_campus_uwp
             // Create a Frame to act as the navigation context and navigate to the first page
             await Task.Delay(1000);
 
+
+
             Frame rootFrame = new Frame();
-
-            rootFrame.Navigate(typeof(MainPage));
-
+            rootFrame.Navigate(typeof(LoginPage));
             // Place the frame in the current Window
             Window.Current.Content = rootFrame;
+
+            
         }
+
+        
     }
 }

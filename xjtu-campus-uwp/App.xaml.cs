@@ -33,6 +33,8 @@ namespace xjtu_campus_uwp
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
+            
+
             if (rootFrame == null)
             {
 
@@ -44,6 +46,8 @@ namespace xjtu_campus_uwp
             }
 
             Window.Current.Activate();
+
+            
 
         }
 
@@ -58,6 +62,8 @@ namespace xjtu_campus_uwp
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+        
 
     }
 }

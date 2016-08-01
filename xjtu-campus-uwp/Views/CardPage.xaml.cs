@@ -36,10 +36,10 @@ namespace xjtu_campus_uwp.Views
 
         private void SubmitButton_OnClick (object sender, RoutedEventArgs e)
         {
-            string raw_psw = PasswordTextBox.Password;
+            string rawPsw = PasswordTextBox.Password;
             string amt = AmtTextBox.Text;
             string code = CodeTextBox.Text;
-            string uri = "http://202.117.14.143:12000/cardpost?usr=genkunabe&psw=Lyx@xjtu120&rawpsw=" + raw_psw +
+            string uri = "http://202.117.14.143:12000/cardpost?usr=genkunabe&psw=Lyx@xjtu120&rawpsw=" + rawPsw +
                          "&code=" + code + "&amt=" + amt;
             Pay(uri);
         }
