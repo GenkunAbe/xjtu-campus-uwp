@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -22,6 +23,7 @@ namespace xjtu_campus_uwp.Views
 {
     public sealed partial class TablePage : Page
     {
+        public ObservableCollection<string> WeekList = new ObservableCollection<string>();
         private ObservableCollection<Course> Courses;
         private TableManager _TableManager;
         public TablePage()
@@ -30,14 +32,16 @@ namespace xjtu_campus_uwp.Views
             
             _TableManager = new TableManager();
 
-            GetStoredCourses();
-            //GetNewCourses();
-        }
-
-        private async void GetStoredCourses()
-        {
-            Courses = await _TableManager.GetCoursesList(2, false);
-            SetCourses();
+            WeekList.Clear();
+            WeekListCombBox.ItemsSource = WeekList;
+            for (int i = 1; i <= 16; ++i)
+            {
+                string item = (i < 10 ? "0" : "") + i;
+                WeekList.Add(item);
+                if (i == App.NowWeek)
+                    WeekListCombBox.SelectedItem = item;
+            }
+            
         }
 
         private async void GetNewCourses()
@@ -48,6 +52,7 @@ namespace xjtu_campus_uwp.Views
 
         private void SetCourses()
         {
+            TableGrid.Children.Clear();
             for (int i = 0; i < 25; ++i)
             {
 
@@ -65,6 +70,26 @@ namespace xjtu_campus_uwp.Views
                 var child = TableGrid.Children[i] as FrameworkElement;
                 Grid.SetRow(child, i % 5);
                 Grid.SetColumn(child, i / 5);
+            }
+
+        }
+
+        private async void WeekListCombBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            if (comboBox != null)
+            {
+                try
+                {
+                    var seletedItem = comboBox.SelectedItem as string;
+                    int nowWeek = int.Parse(seletedItem);
+                    Courses = await _TableManager.GetCoursesList(nowWeek, false);
+                    SetCourses();
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("Select Week Failed!");
+                }
             }
         }
     }

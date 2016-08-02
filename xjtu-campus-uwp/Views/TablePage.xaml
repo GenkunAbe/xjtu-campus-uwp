@@ -34,9 +34,13 @@
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Row="0" Column="0">
-            <TextBlock FontSize="15" Text="123" Margin="10,10,10,10"/>
-        </Grid>
+        <ComboBox Name="WeekListCombBox" Grid.Row="0" Grid.Column="0" Margin="3,3,0,0" BorderBrush="White" SelectionChanged="WeekListCombBox_OnSelectionChanged">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
         <Grid Row="0" Column="1" Margin="3,3,3,3">
             <Grid.ColumnDefinitions>

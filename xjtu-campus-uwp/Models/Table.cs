@@ -104,6 +104,7 @@ namespace xjtu_campus_uwp.Models
                 tmpCourses[course.GetDay(), course.StartTime / 2] = course;
             }
 
+            Courses.Clear();
             for (int i = 0; i < 5; ++i)
                 for (int j = 0; j < 5; ++j)
                     Courses.Add(tmpCourses[i, j] ?? new Course());
