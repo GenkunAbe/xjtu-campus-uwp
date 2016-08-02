@@ -18,34 +18,59 @@ using xjtu_campus_uwp.Models;
 
 namespace xjtu_campus_uwp.Views
 {
+    public class News
+    {
+        public static ObservableCollection<NewsGlance> GlanceList { get; set; } = new ObservableCollection<NewsGlance>();
+    }
+
     public sealed partial class NewsPage : Page
     {
-        private ObservableCollection<NewsGlance> NewsList;
+        private ObservableCollection<NewsGlance> NewsList
+        {
+            get { return News.GlanceList; }
+            set
+            {
+                News.GlanceList.Clear();
+                foreach (NewsGlance newsGlance in value)
+                {
+                    News.GlanceList.Add(newsGlance);
+                }
+            }
+        }
+        private static NewsManager _NewsManager = new NewsManager();
+
         public NewsPage()
         {
             this.InitializeComponent();
-            GetNewsList();
+            NewsList = News.GlanceList;
+            GetStoredNewsList();
         }
 
-        private async void GetNewsList()
+        private async void GetStoredNewsList()
         {
-            NewsList = await NewsManager.GetNewsList();
-            NewsGlanceListView.ItemsSource = NewsList;
+            NewsList = await _NewsManager.GetStoredNewsList();
         }
 
-        private void NewsListItem_OnClick(object sender, ItemClickEventArgs e)
+        private async void NewsListItem_OnClick(object sender, ItemClickEventArgs e)
         {
             NewsGlance news = (NewsGlance) e.ClickedItem;
             string link = news.Link;
             if (!link.StartsWith("http"))
                 link = "http://dean.xjtu.edu.cn" + link;
-            OpenUri(link);
-        }
-
-        private async void OpenUri(string link)
-        {
             Uri uri = new Uri(link);
             await Windows.System.Launcher.LaunchUriAsync(uri);
         }
+
+        public static async void Refresh()
+        {
+            var tmp = await _NewsManager.GetNewNewsList();
+
+            News.GlanceList.Clear();
+            foreach (NewsGlance newsGlance in tmp)
+            {
+                News.GlanceList.Add(newsGlance);
+            }
+        }
+
     }
 }

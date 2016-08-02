@@ -17,29 +17,90 @@ using xjtu_campus_uwp.Models;
 
 namespace xjtu_campus_uwp.Views
 {
+
+    public class x
+    {
+        public static ObservableCollection<Grade> Grades { get; set; } = new ObservableCollection<Grade>();
+    }
+
+    
     public sealed partial class GradePage : Page
     {
-        private ObservableCollection<Grade> Grades;
-        private GradeManager _GradeManager;
+        public ObservableCollection<Grade> Grades
+        {
+            get { return x.Grades; }
+            set
+            {
+                x.Grades.Clear();
+                string nowTerm = "";
+                foreach (Grade grade in value)
+                {
+                    if (nowTerm != grade.Term)
+                    {
+                        if (nowTerm != "")
+                        {
+                            x.Grades.Add(new Grade("", ""));
+                        }
+                        nowTerm = grade.Term;
+                        x.Grades.Add(new Grade(nowTerm, ""));
+                    }
+                    x.Grades.Add(grade);
+                }
+            }
+        }
+        private static GradeManager _GradeManager = new GradeManager();
+
         public GradePage()
         {
             this.InitializeComponent();
-            Grades = new ObservableCollection<Grade>();
-            _GradeManager = new GradeManager();
-            GetStoredGrade();
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
         }
 
-        private async void GetStoredGrade()
+        private void App_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
         {
-            Grades = await _GradeManager.GetStoredGrades();
-            ScoreListView.ItemsSource = Grades;
+
+            // Navigate back if possible, and if the event has not 
+            // already been handled .
+            if (Frame.CanGoBack && e.Handled == false)
+            {
+                e.Handled = true;
+                Frame.GoBack();
+            }
         }
 
-        public async void GetNewGrades()
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            Grades = await _GradeManager.GetNewGrades();
-            ScoreListView.ItemsSource = Grades;
-            _GradeManager.Save();
+            if (x.Grades.Count != 0) return;
+            ObservableCollection<Grade> tmp;
+            try
+            {
+                tmp = await _GradeManager.GetStoredGrades();
+            }
+            catch (Exception)
+            {
+                tmp = await _GradeManager.GetNewGrades();
+            }
+            Grades = tmp;
+        }
+
+        public static async void Refresh()
+        {
+            var tmp = await _GradeManager.GetNewGrades();
+            x.Grades.Clear();
+            string nowTerm = "";
+            foreach (Grade grade in tmp)
+            {
+                if (nowTerm != grade.Term)
+                {
+                    if (nowTerm != "")
+                    {
+                        x.Grades.Add(new Grade("", ""));
+                    }
+                    nowTerm = grade.Term;
+                    x.Grades.Add(new Grade(nowTerm, ""));
+                }
+                x.Grades.Add(grade);
+            }
         }
 
     }

@@ -31,6 +31,7 @@ namespace xjtu_campus_uwp.Views
             _TableManager = new TableManager();
 
             GetStoredCourses();
+            //GetNewCourses();
         }
 
         private async void GetStoredCourses()

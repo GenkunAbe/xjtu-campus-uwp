@@ -28,24 +28,16 @@ namespace xjtu_campus_uwp.Views
 
         private async void LoadCaptcha()
         {
-            string uri = "http://202.117.14.143:12000/cardpre?usr=genkunabe&psw=Lyx@xjtu120";
-            BitmapImage bitmap = await HttpHelper.GetImage(uri);
-            CaptchaImg.Source = bitmap;
+            CaptchaImg.Source = await CardManager.GetCaptcha();
         }
 
-        private void SubmitButton_OnClick (object sender, RoutedEventArgs e)
+        private async void SubmitButton_OnClick (object sender, RoutedEventArgs e)
         {
             string rawPsw = PasswordTextBox.Password;
-            string amt = AmtTextBox.Text;
             string code = CodeTextBox.Text;
-            string uri = App.Host + "cardpost?usr=" + App.NetId + "&psw=" + App.Psw + "&rawpsw=" + rawPsw +
-                         "&code=" + code + "&amt=" + amt;
-            Pay(uri);
-        }
+            string amt = AmtTextBox.Text;
+            string result = await CardManager.Pay(rawPsw, code, amt);
 
-        private async void Pay (string uri)
-        {
-            string result = await HttpHelper.GetResponse(uri);
             ResultTextBlock.Text = result;
         }
 
@@ -58,5 +50,6 @@ namespace xjtu_campus_uwp.Views
         {
             LoadCaptcha();
         }
+
     }
 }

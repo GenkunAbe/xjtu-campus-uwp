@@ -99,6 +99,7 @@
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Authetication.cs" />
+    <Compile Include="Models\Card.cs" />
     <Compile Include="Models\HttpHelper.cs" />
     <Compile Include="Models\Library.cs" />
     <Compile Include="Models\News.cs" />
@@ -108,6 +109,9 @@
     </Compile>
     <Compile Include="Views\CardPage.xaml.cs">
       <DependentUpon>CardPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GpaPage.xaml.cs">
+      <DependentUpon>GpaPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GradePage.xaml.cs">
       <DependentUpon>GradePage.xaml</DependentUpon>
@@ -197,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GpaPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

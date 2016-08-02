@@ -13,10 +13,39 @@ using Windows.Storage;
 
 namespace xjtu_campus_uwp.Models
 {
-    class Grade
+    public class Grade
     {
+        public string Term { get; set; }
+
         public string Name { get; set; }
+        public string Type { get; set; }
+
+        public string Credit { get; set; }
+
         public string Score { get; set; }
+        public string Daily { get; set; }
+        public string Standard { get; set; }
+        public string Interim { get; set; }
+        public string Experiment { get; set; }
+        public string Final { get; set; }
+        public string Other { get; set; }
+
+        public Grade(JsonArray arr)
+        {
+            Term = arr[0].GetString();
+            Name = arr[2].GetString();
+            Type = arr[3].GetString();
+            Credit = arr[6].GetString();
+
+            JsonArray scores = JsonArray.Parse(arr[5].ToString());
+            Score = scores[0].GetString();
+            Daily = scores[1].GetString();
+            Standard = scores[2].GetString();
+            Interim = scores[3].GetString();
+            Experiment = scores[4].GetString();
+            Final = scores[5].GetString();
+            Other = scores[6].GetString();
+        }
 
         public Grade(string name, string score)
         {
@@ -30,8 +59,8 @@ namespace xjtu_campus_uwp.Models
     class GradeManager
     {
 
-        private string RawGrades;
-        private ObservableCollection<Grade> Grades;
+        public string RawGrades;
+        public ObservableCollection<Grade> Grades;
 
         public GradeManager()
         {
@@ -45,6 +74,7 @@ namespace xjtu_campus_uwp.Models
             {
                 string uri = App.Host + "grade?usr=" + App.NetId + "&psw=" + App.Psw;
                 RawGrades = await HttpHelper.GetResponse(uri);
+                Save();
             }
             catch (Exception)
             {
@@ -104,13 +134,31 @@ namespace xjtu_campus_uwp.Models
 
                 foreach (IJsonValue line in lines)
                 {
-                    JsonArray items = JsonArray.Parse(line.ToString());
-                    JsonArray scores = JsonArray.Parse(items[5].ToString());
-                    Grade grade = new Grade(items[2].GetString(), scores[0].GetString());
-                    // System.Diagnostics.Debug.Write(items[2].GetString() + "\n");
-                    Grades.Add(grade);
+                    JsonArray arr = JsonArray.Parse(line.ToString());
+                    Grades.Add(new Grade(arr));
                 }
             }
+        }
+
+        public double GetGpaFromScore(int score)
+        {
+            if (95 <= score && score <= 100)
+                return 4.3;
+            if (90 <= score && score < 95)
+                return 4.0;
+            if (85 <= score && score < 90)
+                return 3.7;
+            if (80 <= score && score < 85)
+                return 3.4;
+            if (75 <= score && score < 80)
+                return 3.1;
+            if (70 <= score && score < 75)
+                return 2.8;
+            if (65 <= score && score < 70)
+                return 2.5;
+            if (60 <= score && score < 65)
+                return 2.2;
+            return 1.9;
         }
     }
 }

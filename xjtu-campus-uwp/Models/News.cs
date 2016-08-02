@@ -5,18 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Json;
+using Windows.Storage;
 
 namespace xjtu_campus_uwp.Models
 {
-    class News
+    public class News
     {
     }
 
-    class NewsGlance
+    public class NewsGlance
     {
         public string Link { get; set; }
         public string Title { get; set; }
         public string Date { get; set; }
+
+        public NewsGlance(string link, string title, string date)
+        {
+            Link = link;
+            Title = title;
+            Date = date;
+        }
 
         public NewsGlance (IJsonValue item)
         {
@@ -29,18 +37,63 @@ namespace xjtu_campus_uwp.Models
 
     class NewsManager
     {
-        public static async Task<ObservableCollection<NewsGlance>> GetNewsList()
+        private string RawNews;
+        private ObservableCollection<NewsGlance> NewsList;
+
+        public NewsManager()
+        {
+            RawNews = "";
+            NewsList = new ObservableCollection<NewsGlance>();
+        }
+
+        public async Task<ObservableCollection<NewsGlance>> GetStoredNewsList()
+        {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            try
+            {
+                StorageFile newsFile = await folder.GetFileAsync("news");
+                RawNews = await FileIO.ReadTextAsync(newsFile);
+                JsonNewsParser();
+                return NewsList;
+            }
+            catch (Exception)
+            {
+                return new ObservableCollection<NewsGlance>();
+            }
+        }
+
+        public async Task<ObservableCollection<NewsGlance>> GetNewNewsList()
         {
             string uri = App.Host + "news";
-            string result = await HttpHelper.GetResponse(uri);
+            RawNews = await HttpHelper.GetResponse(uri);
+            NewsList.Clear();
+            JsonNewsParser();
+            Save();
+            return NewsList;
+        }
 
-            JsonArray lines = JsonArray.Parse(result);
-            ObservableCollection<NewsGlance> NewsList = new ObservableCollection<NewsGlance>();
+        private async void Save()
+        {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile newsFile;
+            try
+            {
+                newsFile = await folder.GetFileAsync("news");
+            }
+            catch (Exception)
+            {
+                newsFile = await folder.CreateFileAsync("news");
+            }
+            await FileIO.WriteTextAsync(newsFile, RawNews);
+        }
+
+        private void JsonNewsParser()
+        {
+            JsonArray lines = JsonArray.Parse(RawNews);
             foreach (IJsonValue line in lines)
             {
                 NewsList.Add(new NewsGlance(line));
             }
-            return NewsList;
         }
     }
 }

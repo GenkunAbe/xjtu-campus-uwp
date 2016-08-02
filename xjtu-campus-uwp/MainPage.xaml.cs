@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -37,7 +38,9 @@ namespace xjtu_campus_uwp
             CardFrame.Navigate(typeof (CardPage));
 
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = LibraryFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = GradeFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
             LibraryFrame.Navigated += OnNavigated;
+            GradeFrame.Navigated += OnNavigated;
 
         }
 
@@ -64,29 +67,29 @@ namespace xjtu_campus_uwp
             switch (MainPivot.SelectedIndex)
             {
                 case 0:
-                    GradeFrame.Navigate(typeof(HomePage));
+                    HomeFrame.Navigate(typeof(HomePage));
                     break;
                 case 1:
-                    GradeFrame.Navigate(typeof(NewsPage));
+                    NewsPage.Refresh();
                     break;
                 case 2:
-                    GradeFrame.Navigate(typeof(TablePage));
+                    TableFrame.Navigate(typeof(TablePage));
                     break;
                 case 3:
-                    GradeFrame.Navigate(typeof(LibraryPage));
+                    LibraryFrame.Navigate(typeof(LibraryPage));
                     break;
                 case 4:
-                    GradeFrame.Navigate(typeof(GradePage));
+                    GradePage.Refresh();
                     break;
                 case 5:
-                    GradeFrame.Navigate(typeof(CardPage));
+                    CardFrame.Navigate(typeof(CardPage));
                     break;
             }
         }
 
         private void Gpa_Click(object sender, RoutedEventArgs e)
         {
-
+            GradeFrame.Navigate(typeof(GpaPage));
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
