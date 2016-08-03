@@ -80,6 +80,7 @@ namespace xjtu_campus_uwp.Views
             {
                 tmp = await _GradeManager.GetNewGrades();
             }
+            if (tmp.Count == 0) tmp = await _GradeManager.GetNewGrades();
             Grades = tmp;
         }
 

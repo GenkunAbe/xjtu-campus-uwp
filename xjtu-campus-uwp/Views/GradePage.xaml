@@ -30,8 +30,8 @@
             </ListView.ItemTemplate>
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="IsHitTestVisible" Value="False"></Setter>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="IsHitTestVisible" Value="False"/>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>

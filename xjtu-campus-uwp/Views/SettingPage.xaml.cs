@@ -69,6 +69,7 @@ namespace xjtu_campus_uwp.Views
                     EnterPasswordPanel.Visibility = Visibility.Visible;
                     HelloLabel.Visibility = Visibility.Collapsed;
                     HelloSwitch.IsOn = false;
+                    PayPasswordBox.Focus(FocusState.Keyboard);
                 }
             }
             else

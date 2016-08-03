@@ -49,6 +49,8 @@ namespace xjtu_campus_uwp.Views
         private async void GetStoredNewsList()
         {
             NewsList = await _NewsManager.GetStoredNewsList();
+            if (NewsList.Count == 0)
+                Refresh();
         }
 
         private async void NewsListItem_OnClick(object sender, ItemClickEventArgs e)

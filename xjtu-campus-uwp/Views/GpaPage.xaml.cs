@@ -97,10 +97,20 @@ namespace xjtu_campus_uwp.Views
                         creditSum += credit;
                     }
 
-                    GpaTitleTextBlock.FontSize = 20;
-                    GpaTextBlock.FontSize = 20;
-                    GpaTitleTextBlock.Text = "GPA: ";
-                    GpaTextBlock.Text = string.Format("{0:00.0000} / {1:0.0000}", scoreSum / creditSum, gpaSum / creditSum);
+                    if (selectedItems.Count != 0)
+                    {
+                        GpaTitleTextBlock.FontSize = 20;
+                        GpaTextBlock.FontSize = 20;
+                        GpaTitleTextBlock.Text = "GPA: ";
+                        GpaTextBlock.Text = string.Format("{0:00.0000} / {1:0.0000}", scoreSum / creditSum, gpaSum / creditSum);
+                    }
+                    else
+                    {
+                        GpaTitleTextBlock.FontSize = 16;
+                        GpaTextBlock.FontSize = 16;
+                        GpaTitleTextBlock.Text = "Tips: ";
+                        GpaTextBlock.Text = "Please select some courses.";
+                    }              
                 }
                 catch (Exception)
                 {

@@ -182,7 +182,53 @@ namespace xjtu_campus_uwp.Models
             for (int i = 0; i < 25; ++i)
                 courses.Add(new Course());
             return courses;
-        } 
+        }
+
+        public async Task<ObservableCollection<Course>> GetTodayCourse()
+        {
+            ObservableCollection<Course> courses = await GetCoursesList(App.NowWeek, false);
+            string dt = DateTime.Today.DayOfWeek.ToString();
+            int today = GetToday(dt);
+            ObservableCollection<Course> result = new ObservableCollection<Course>();
+            if (1 <= today && today <= 5)
+            {
+                for (int i = 0; i < 4; ++i)
+                {
+                    result.Add(courses[today - 1 + i]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 4; ++i)
+                {
+                    result.Add(new Course());
+                }
+            }
+            return result;
+        }
+
+        private static int GetToday(string td)
+        {
+            switch (td)
+            {
+                case "Monday":
+                    return 1;
+                case "Tuesday":
+                    return 2;
+                case "Wednesday":
+                    return 3;
+                case "Thursday":
+                    return 4;
+                case "Friday":
+                    return 5;
+                case "Saturday":
+                    return 6;
+                case "Sunday":
+                    return 7;
+                default:
+                    return 0;
+            }
+        }
 
     }
 }

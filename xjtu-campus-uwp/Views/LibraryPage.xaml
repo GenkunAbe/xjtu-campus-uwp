@@ -18,7 +18,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:BookGlance">
                         <RelativePanel>
-                            <TextBlock Name="BookName" Text="{x:Bind Name}" />
+                            <TextBlock Name="BookName" Text="{x:Bind Name}"/>
                         </RelativePanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -30,10 +30,10 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid Column="0">
-                <TextBox Name="SearchTextBlock" FontSize="16"></TextBox>
+                <TextBox Name="SearchTextBlock" FontSize="20"></TextBox>
             </Grid>
             <Grid Column="1">
-                <Button Name="SearchButton" Content="Search" FontSize="16" Click="SearchButton_OnClick"/>
+                <Button Name="SearchButton" Content="Search" FontSize="20" Click="SearchButton_OnClick"/>
             </Grid>
         </Grid>
     </Grid>

@@ -24,7 +24,7 @@
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
             <PasswordBox Grid.Column="0" Name="PayPasswordBox" FontSize="13" PlaceholderText="Enter your QUERY password"/>
-            <Button Grid.Column="1" RelativePanel.RightOf="PayPasswordBox" Content="OK" Foreground="White" Click="ButtonOK_OnClick"></Button>
+            <Button Grid.Column="1" RelativePanel.RightOf="PayPasswordBox" Content="OK" Foreground="White" Click="ButtonOK_OnClick" Margin="0,-2,0,-2"/>
         </Grid>
         <TextBlock Name="HelloLabel" Grid.Row="0" Grid.Column="0" Text="Using Windows Hello" Margin="30,50,20,20" FontSize="22" Foreground="White"/>
         <ToggleSwitch Name="HelloSwitch" Grid.Row="0" Grid.Column="1" OffContent="" OnContent="" Toggled="HelloSwitch_OnToggled" Margin="0,45,0,20"/>
