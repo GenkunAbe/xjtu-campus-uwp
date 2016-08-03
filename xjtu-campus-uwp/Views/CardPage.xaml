@@ -47,7 +47,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Image Name="CaptchaImg" Width="60" Height="20" HorizontalAlignment="Center" Margin="0,0,15,0" Tapped="Captcha_Tapped"/>
+            <Image Grid.Column="0" Name="CaptchaImg" Width="60" Height="20" HorizontalAlignment="Center" Margin="0,0,15,0"/>
+            <Button Grid.Column="0" Width="60" Height="20" HorizontalAlignment="Center" Margin="0,0,15,0" Opacity="0.1" Click="ButtonCaptcha_OnClick"/>
             <TextBox Grid.Column="1" Name="CodeTextBox" Margin="10,0,0,0" InputScope="Number"/>
         </Grid>
 

@@ -28,6 +28,7 @@ namespace xjtu_campus_uwp.Views
             GetCardInfo();
         }
 
+
         private async void GetNewsGlanceList()
         {
             var tmp = await manager.GetStoredNewsList();

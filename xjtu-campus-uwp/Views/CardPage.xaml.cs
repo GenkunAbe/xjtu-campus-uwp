@@ -123,7 +123,7 @@ namespace xjtu_campus_uwp.Views
                 var dialog = new ContentDialog()
                 {
                     Title = "Warning",
-                    Content = "Please enter all of this form!",
+                    Content = "Please enter all items of this form!",
                     PrimaryButtonText = "Ok",
                     SecondaryButtonText = "Cancel",
                     FullSizeDesired = false,
@@ -138,15 +138,9 @@ namespace xjtu_campus_uwp.Views
             ResultTextBlock.Text = result.msg;
         }
 
-        private void Captcha_Tapped (object sender, TappedRoutedEventArgs e)
+        private void ButtonCaptcha_OnClick(object sender, RoutedEventArgs e)
         {
             LoadCaptcha();
         }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            LoadCaptcha();
-        }
-
     }
 }

@@ -17,14 +17,11 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+using xjtu_campus_uwp.Models;
 
 namespace xjtu_campus_uwp
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class SplashPage : Page
     {
         public SplashPage(LaunchActivatedEventArgs e)
@@ -36,44 +33,46 @@ namespace xjtu_campus_uwp
         private async void Page_Loaded(object sender, LaunchActivatedEventArgs e)
         {
 
-            
-
-            // 针对mobile
+            // Setting StatusBar Color
+            // For Mobile
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
-                // 需要引用Windows Mobile Extensions for the UWP
                 StatusBar sb = StatusBar.GetForCurrentView();
-                // 背景色设置为需要颜色
                 sb.BackgroundColor = Color.FromArgb(255, 81, 157, 73);
                 sb.BackgroundOpacity = 1;
             }
 
-            // 针对desktop
+            // For Desktop
             ApplicationView appView = ApplicationView.GetForCurrentView();
             ApplicationViewTitleBar titleBar = appView.TitleBar;
-            // 背景色设置为需要颜色
+            // TitleBar Color
             Color bc = Color.FromArgb(255, 81, 157, 73);
             titleBar.BackgroundColor = bc;
             titleBar.InactiveBackgroundColor = bc;
-            // 按钮背景色按需进行设置
+            // Button in TitleBar
             titleBar.ButtonBackgroundColor = bc;
             titleBar.ButtonHoverBackgroundColor = bc;
             titleBar.ButtonPressedBackgroundColor = bc;
             titleBar.ButtonInactiveBackgroundColor = bc;
 
             // Create a Frame to act as the navigation context and navigate to the first page
-            await Task.Delay(1000);
-
-
+            bool isAutoLoginVaild = await Authetication.AutoLoginAutheticate();
 
             Frame rootFrame = new Frame();
-            rootFrame.Navigate(typeof(LoginPage));
+            if (isAutoLoginVaild)
+            {
+                rootFrame.Navigate(typeof(MainPage));
+            }
+            else
+            {
+                await Task.Delay(1000);
+                rootFrame.Navigate(typeof(LoginPage));
+            }
+
             // Place the frame in the current Window
             Window.Current.Content = rootFrame;
-
-            
+    
         }
 
-        
     }
 }

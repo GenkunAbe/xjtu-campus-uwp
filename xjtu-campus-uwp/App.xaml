@@ -4,5 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:xjtu_campus_uwp"
     RequestedTheme="Light">
+    
+    <Application.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="MainColor" Color="#5db754"/>
+            <SolidColorBrush x:Key="DarkColor" Color="#519d49"/>
+            <SolidColorBrush x:Key="LightColor" Color="#a4e39e"/>
+        </ResourceDictionary>
+    </Application.Resources>
 
 </Application>

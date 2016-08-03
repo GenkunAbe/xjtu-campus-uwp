@@ -7,10 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Background="#5db754">
+    <StackPanel Background="{StaticResource MainColor}">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock FontSize="75
-                       "
+            <TextBlock FontSize="75"
         		HorizontalAlignment="Center"
         		VerticalAlignment="Center"
         		Margin="0,180,0,0"

@@ -8,7 +8,9 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -44,7 +46,30 @@ namespace xjtu_campus_uwp
 
             LibraryFrame.Navigated += OnNavigated;
             GradeFrame.Navigated += OnNavigated;
-            
+
+
+            // Setting StatusBar Color
+            // For Mobile
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            { 
+                StatusBar sb = StatusBar.GetForCurrentView();
+                sb.BackgroundColor = Color.FromArgb(255, 81, 157, 73);
+                sb.BackgroundOpacity = 1;
+            }
+
+            // For Desktop
+            ApplicationView appView = ApplicationView.GetForCurrentView();
+            ApplicationViewTitleBar titleBar = appView.TitleBar;
+            // TitleBar Color
+            Color bc = Color.FromArgb(255, 81, 157, 73);
+            titleBar.BackgroundColor = bc;
+            titleBar.InactiveBackgroundColor = bc;
+            // Button in TitleBar
+            titleBar.ButtonBackgroundColor = bc;
+            titleBar.ButtonHoverBackgroundColor = bc;
+            titleBar.ButtonPressedBackgroundColor = bc;
+            titleBar.ButtonInactiveBackgroundColor = bc;
+
 
         }
 

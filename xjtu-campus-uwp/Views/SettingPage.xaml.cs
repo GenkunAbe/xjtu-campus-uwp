@@ -55,20 +55,55 @@ namespace xjtu_campus_uwp.Views
             {
                 helloFile = await folder.CreateFileAsync("hello");
             }
-            await FileIO.WriteTextAsync(helloFile, "" + HelloSwitch.IsOn);
+
             if (HelloSwitch.IsOn)
             {
                 try
                 {
                     StorageFile payFile = await folder.GetFileAsync("pay");
                     App.PayPsw = await FileIO.ReadTextAsync(payFile);
+                    await FileIO.WriteTextAsync(helloFile, "" + true);
                 }
                 catch (Exception)
                 {
-                    StorageFile payFile = await folder.CreateFileAsync("pay");
-                    await FileIO.WriteTextAsync(payFile, "951214");
+                    EnterPasswordPanel.Visibility = Visibility.Visible;
+                    HelloLabel.Visibility = Visibility.Collapsed;
+                    HelloSwitch.IsOn = false;
                 }
             }
+            else
+            {
+                await FileIO.WriteTextAsync(helloFile, "" + false);
+                try
+                {
+                    StorageFile payFile = await folder.GetFileAsync("pay");
+                    await payFile.DeleteAsync();
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("Delete Paypsw Failed!");
+                }
+            }
+            
+        }
+
+        private async void ButtonOK_OnClick(object sender, RoutedEventArgs e)
+        {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile payFile;
+            try
+            {
+                payFile = await folder.GetFileAsync("pay");
+            }
+            catch (Exception)
+            {
+                payFile = await folder.CreateFileAsync("pay");
+            }
+            await FileIO.WriteTextAsync(payFile, PayPasswordBox.Password);
+            EnterPasswordPanel.Visibility = Visibility.Collapsed;
+            HelloLabel.Visibility = Visibility.Visible;
+            HelloSwitch.IsOn = true;
+            PayPasswordBox.Password = "";
         }
     }
 }

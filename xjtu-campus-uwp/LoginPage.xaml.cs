@@ -23,86 +23,40 @@ namespace xjtu_campus_uwp
     {
         public LoginPage()
         {
-            AutoLogin();
             this.InitializeComponent();
-        }
+        }    
 
-        private async void AutoLogin()
+        private async void LoginButton_OnClick(object sender, RoutedEventArgs e)
         {
-            StorageFolder folder = ApplicationData.Current.LocalFolder;
-            try
+            bool result = await ShowLoging(NetIdTextBox.Text, PasswordTextBox.Password);
+            if (result && PasswordSaving.IsOn)
             {
-                var netIdFile = await folder.GetFileAsync("netId");
-                IList<string> lines = await FileIO.ReadLinesAsync(netIdFile);
-                await ShowLoging(lines[0], lines[1]);
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("Auto Login Failed!");
+                Frame rootFrame = new Frame();
+                rootFrame.Navigate(typeof(MainPage));
+                Window.Current.Content = rootFrame;
+
+                Authetication.SaveNetId(NetIdTextBox.Text, PasswordTextBox.Password);
             }
         }
 
         private async Task<bool> ShowLoging(string usr, string psw)
         {
-            var dialog = new ContentDialog
-            {
-                Title = "XJTU Campus",
-                Content = "Autheticating",
-                IsPrimaryButtonEnabled = true
-            };
-#pragma warning disable CS4014
-            dialog.ShowAsync();
-#pragma warning restore CS4014
+            LoginProgressRing.IsActive = true;
+            ResultTextBlock.Text = "Autheticating";
 
             bool result = await Authetication.LoginAutheticate(usr, psw);
+            LoginProgressRing.IsActive = false;
             if (result)
             {
-                dialog.Content = "Login Success!";
+                ResultTextBlock.Text = "Login Success!";
                 App.NetId = usr;
                 App.Psw = psw;
-                await Task.Delay(1000);
-                dialog.Hide();
-
-                Frame rootFrame = new Frame();
-                rootFrame.Navigate(typeof(MainPage));
-                // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
-
+                await Task.Delay(500);
                 return true;
             }
-            else
-            {
-                dialog.Content = "Login Failed!";
-                await Task.Delay(1000);
-                dialog.Hide();
-                return false;
-            }
+            ResultTextBlock.Text = "Login Failed!";
+            return false;
         }
 
-        private async void LoginButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            bool result = await ShowLoging(NetIDTextBox.Text, PasswordTextBox.Password);
-            if (result)
-            {
-                SaveNetId(NetIDTextBox.Text, PasswordTextBox.Password);
-            }
-        }
-
-        private async void SaveNetId(string netId, string psw)
-        {
-            StorageFolder folder = ApplicationData.Current.LocalFolder;
-            StorageFile netIdFile;
-            try
-            {
-                netIdFile = await folder.GetFileAsync("netId");
-            }
-            catch (Exception)
-            {
-                netIdFile = await folder.CreateFileAsync("netId");
-            }
-
-            await FileIO.WriteTextAsync(netIdFile, netId);
-            await FileIO.AppendTextAsync(netIdFile, "\n" + psw);
-        }
     }
 }

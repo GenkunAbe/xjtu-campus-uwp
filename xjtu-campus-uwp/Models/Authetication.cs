@@ -21,8 +21,44 @@ namespace xjtu_campus_uwp.Models
             return auth == "True";
         }
 
-        
+        public static async Task<bool> AutoLoginAutheticate()
+        {
+            try
+            {
+                StorageFolder folder = ApplicationData.Current.LocalFolder;
+                StorageFile netIdFile = await folder.GetFileAsync("netId");
+                IList<string> lines = await FileIO.ReadLinesAsync(netIdFile);
+                bool authResult = await LoginAutheticate(lines[0], lines[1]);
+                if (authResult)
+                {
+                    App.NetId = lines[0];
+                    App.Psw = lines[1];
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return false;
+        }
+
+        public static async void SaveNetId(string usr, string psw)
+        {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile netIdFile;
+            try
+            {
+                netIdFile = await folder.GetFileAsync("netId");
+            }
+            catch (Exception)
+            {
+                netIdFile = await folder.CreateFileAsync("netId");
+            }
+
+            await FileIO.WriteTextAsync(netIdFile, usr);
+            await FileIO.AppendTextAsync(netIdFile, "\n" + psw);
+        }
+
     }
-
-
 }
