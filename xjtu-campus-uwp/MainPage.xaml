@@ -55,6 +55,7 @@
 
     <Page.BottomAppBar>
         <CommandBar IsOpen="False" ClosedDisplayMode="Minimal"  Background="#a4e39e" Margin="0,0,0,-3" Opacity="1">
+            <AppBarButton x:Name="Setting" Label="Setting" Icon="Setting" Click="Setting_OnClick_Click"/>
             <AppBarButton x:Name="Refresh" Label="Refresh" Icon="Refresh" Click="Refresh_Click"/>
             <AppBarButton x:Name="Gpa" Label="GPA" Icon="Calculator" Click="Gpa_Click"/>
             <AppBarButton x:Name="Add" Label="Add" Icon="Add" Click="Add_Click"/>

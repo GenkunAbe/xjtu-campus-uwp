@@ -95,7 +95,8 @@ namespace xjtu_campus_uwp.Models
             else
                 rawCourse = await GetStoredRawCourses();
 
-            if (RawCourse == "") return GetInitCourses();
+            if (isNew && RawCourse == "") return GetInitCourses();
+            if (!isNew && RawCourse == "") rawCourse = await GetNewRawCourses();
 
             foreach (Course course in rawCourse)
             {

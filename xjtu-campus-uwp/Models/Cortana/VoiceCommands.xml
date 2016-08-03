@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="zh-cn" Name="set">
+    <AppName>爱交大</AppName>
+    <Example> 打开主页 或 查询成绩 </Example>
+
+    <Command Name="OpenMainPage">
+      <Example>打开主页</Example>
+      <ListenFor>打开主页</ListenFor>
+      <Feedback>正在打开爱交大……</Feedback>
+      <Navigate  />
+    </Command>
+
+    <Command Name="QueryTable">
+      <Example>查询今天的课表</Example>
+      <ListenFor >[搜索]{Day}[的]课表</ListenFor>
+      <ListenFor >[查询]{Day}[的]课表</ListenFor>
+      <Feedback> 正在查询{Day}的课表</Feedback>
+      <Navigate />
+    </Command>
+
+    <Command Name="NavToPage">
+      <Example>跳转到充值界面</Example>
+      <ListenFor>[跳转]到{Destination}界面</ListenFor>
+      <Feedback>正在跳转到{Destination}界面</Feedback>
+      <Navigate />
+    </Command>
+    
+    <Command Name="QueryGrade">
+      <Example>查询成绩</Example>
+      <ListenFor>查询成绩</ListenFor>
+      <Feedback>正在查询最新的成绩...</Feedback>
+      <VoiceCommandService Target="CampusService"/>
+    </Command>
+
+    <!--PhraseList用来定义一组语音字符，指定相应规定的字符，用来消除歧义-->
+    <!--使用 PhraseList 限制识别适用于一组相对较小的单词。当单词组过大（例如数百个单词）或者根本不应被限制时，
+        请使用 PhraseTopic 元素和 Subject 元素来优化语音识别结果的相关性，从而增强可扩展性。-->
+    <PhraseList Label="Day">
+      <Item>今天</Item>
+      <Item>明天</Item>
+      <Item>后天</Item>
+      <Item>昨天</Item>
+    </PhraseList>
+    
+    <PhraseList Label="Destination">
+      <Item>充值</Item>
+      <Item>成绩</Item>
+      <Item>设置</Item>
+      <Item>关于</Item>
+    </PhraseList>
+
+    <!--可以提高识别率，内部属性Subject可指定该关键字类型，比如 城市名 姓名  地址 等类型-->
+    <!--<PhraseTopic Label="Day" Scenario="Natural Language">
+      <Subject>Day</Subject>
+    </PhraseTopic>-->
+  </CommandSet>
+
+  <!-- 其他语言的 CommandSet -->
+
+</VoiceCommands>

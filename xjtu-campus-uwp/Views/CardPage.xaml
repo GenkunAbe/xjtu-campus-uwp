@@ -21,8 +21,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Password: " Margin="0,0,10,0"/>
-            <PasswordBox Grid.Column="1" Name="PasswordTextBox" Margin="10,0,0,0" MaxLength="6">
+            <TextBlock Name="PasswordLabel" Grid.Column="0" Text="Password: " Margin="0,0,10,0"/>
+            <PasswordBox Name="PasswordTextBox" Grid.Column="1" Margin="10,0,0,0" MaxLength="6">
                 <PasswordBox.InputScope>
                     <InputScope>
                         <InputScope.Names>
@@ -55,8 +55,8 @@
             <Button Name="SubmitButton" Width="Auto" FontSize="14" Content="Submit" HorizontalAlignment="Center" Click="SubmitButton_OnClick"/>
         </Grid>
 
-        <Grid Row="4"  Margin="70,0,70,20">
-            <TextBlock Name="ResultTextBlock" Width="Auto" FontSize="14" HorizontalAlignment="Center" Text=""/>
+        <Grid Row="4"  Margin="70,20,70,20">
+            <TextBlock Name="ResultTextBlock" Width="Auto" FontSize="18" HorizontalAlignment="Center" Text=""/>
         </Grid>
 
     </Grid>

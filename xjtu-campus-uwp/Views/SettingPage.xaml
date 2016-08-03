@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="xjtu_campus_uwp.Views.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:xjtu_campus_uwp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Using Windows Hello" Margin="20" FontSize="20"/>
+        <ToggleSwitch Name="HelloSwitch" Grid.Row="0" Grid.Column="1" OffContent="Off" OnContent="On" Toggled="HelloSwitch_OnToggled"/>
+    </Grid>
+</Page>

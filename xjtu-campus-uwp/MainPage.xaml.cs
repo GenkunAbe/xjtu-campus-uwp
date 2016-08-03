@@ -37,10 +37,14 @@ namespace xjtu_campus_uwp
             GradeFrame.Navigate(typeof (GradePage));
             CardFrame.Navigate(typeof (CardPage));
 
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = LibraryFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = GradeFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
+//            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = LibraryFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
+//            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = GradeFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+
             LibraryFrame.Navigated += OnNavigated;
             GradeFrame.Navigated += OnNavigated;
+            
 
         }
 
@@ -58,8 +62,8 @@ namespace xjtu_campus_uwp
 
         private void OnNavigated(object sender, NavigationEventArgs e)
         {
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = ((Frame)sender).CanGoBack ?
-                AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+//            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = ((Frame)sender).CanGoBack ?
+//                AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
@@ -105,6 +109,11 @@ namespace xjtu_campus_uwp
         private void Account_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Setting_OnClick_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SettingPage));
         }
 
         private void Pivot_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -155,6 +164,7 @@ namespace xjtu_campus_uwp
                     break;
             }
         }
+
 
         
     }

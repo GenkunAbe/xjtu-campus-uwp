@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 using System.Runtime.Serialization.Json;
+using Windows.ApplicationModel.VoiceCommands;
 using Windows.Data.Json;
 using Windows.Storage;
 
@@ -56,7 +57,7 @@ namespace xjtu_campus_uwp.Models
 
 
 
-    class GradeManager
+    public class GradeManager
     {
 
         public string RawGrades;
@@ -83,6 +84,23 @@ namespace xjtu_campus_uwp.Models
             }
             JsonGradeParser();
             return Grades;
+        }
+
+        public async Task<List<VoiceCommandContentTile>> GetStoredGradesForCortana()
+        {
+            List<VoiceCommandContentTile> gradeList = new List<VoiceCommandContentTile>();
+            ObservableCollection<Grade> grades = await GetStoredGrades();
+            for (var i = 0; i < 6; i++)
+            {
+                gradeList.Add(new VoiceCommandContentTile
+                {
+                    AppContext = i, //用来存储该条Tile的标识  一般存储数据id
+                    ContentTileType = VoiceCommandContentTileType.TitleWithText,
+                    Title = grades[i].Name,
+                    TextLine1 = grades[i].Score
+                });
+            }
+            return gradeList;
         }
 
         public async Task<ObservableCollection<Grade>> GetStoredGrades()
