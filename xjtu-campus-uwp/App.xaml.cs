@@ -46,19 +46,16 @@ namespace xjtu_campus_uwp
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
             {
+                
                 SplashPage splashPage = new SplashPage(e);
                 Window.Current.Content = splashPage;
             }
+
             Window.Current.Activate();
-            InsertVoiceCommands();
+
         }
 
-        private async void InsertVoiceCommands()
-        {
-            Uri uri = new Uri("ms-appx:///Models/Cortana/VoiceCommands.xml");
-            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
-            await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(file);
-        }
+        
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {

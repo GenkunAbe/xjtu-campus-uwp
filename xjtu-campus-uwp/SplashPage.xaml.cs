@@ -9,6 +9,8 @@ using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.VoiceCommands;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -27,10 +29,14 @@ namespace xjtu_campus_uwp
         public SplashPage(LaunchActivatedEventArgs e)
         {
             this.InitializeComponent();
-            Page_Loaded(null, e);
+            Loaded += Page_Loaded;
+            if (!e.PrelaunchActivated)
+            {
+                InsertVoiceCommands();
+            }
         }
 
-        private async void Page_Loaded(object sender, LaunchActivatedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
 
             // Setting StatusBar Color
@@ -72,6 +78,13 @@ namespace xjtu_campus_uwp
             // Place the frame in the current Window
             Window.Current.Content = rootFrame;
     
+        }
+
+        private async void InsertVoiceCommands()
+        {
+            Uri uri = new Uri("ms-appx:///Models/Cortana/VoiceCommands.xml");
+            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
+            await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(file);
         }
 
     }
