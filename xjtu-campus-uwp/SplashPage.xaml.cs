@@ -19,7 +19,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using xjtu_campus_uwp.Models;
+using XJTUCampus.Model;
 
 namespace xjtu_campus_uwp
 {
@@ -30,6 +30,7 @@ namespace xjtu_campus_uwp
         {
             this.InitializeComponent();
             Loaded += Page_Loaded;
+            //Page_Loaded(this, null);
             if (!e.PrelaunchActivated)
             {
                 InsertVoiceCommands();
@@ -82,7 +83,7 @@ namespace xjtu_campus_uwp
 
         private async void InsertVoiceCommands()
         {
-            Uri uri = new Uri("ms-appx:///Models/Cortana/VoiceCommands.xml");
+            Uri uri = new Uri("ms-appx:///VoiceCommands.xml");
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
             await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(file);
         }

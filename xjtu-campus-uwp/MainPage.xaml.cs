@@ -18,8 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using xjtu_campus_uwp.Models;
-using xjtu_campus_uwp.Views;
+using xjtu_campus_uwp.View;
 
 namespace xjtu_campus_uwp
 {

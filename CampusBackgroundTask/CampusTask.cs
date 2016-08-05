@@ -8,7 +8,7 @@ using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Storage;
-using xjtu_campus_uwp.Models;
+using XJTUCampus.Model;
 
 namespace CampusBackgroundTask
 {

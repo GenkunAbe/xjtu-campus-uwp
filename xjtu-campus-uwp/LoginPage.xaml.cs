@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using xjtu_campus_uwp.Models;
+using XJTUCampus.Model;
 
 namespace xjtu_campus_uwp
 {
@@ -49,8 +49,8 @@ namespace xjtu_campus_uwp
             if (result)
             {
                 ResultTextBlock.Text = "Login Success!";
-                App.NetId = usr;
-                App.Psw = psw;
+                UserData.NetId = usr;
+                UserData.Psw = psw;
                 await Task.Delay(500);
                 return true;
             }
