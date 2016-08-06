@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.VoiceCommands;
 using Windows.Data.Json;
 
 namespace XJTUCampus.Model
@@ -95,6 +96,70 @@ namespace XJTUCampus.Model
                 Details.Add(new BookDetail(items));
             }
             return Details;
+        }
+
+        public static async Task<List<VoiceCommandContentTile>> GetBookGlanceListForCortana(string arg)
+        {
+            ObservableCollection<BookGlance> rawList = await GetBookGlanceList(arg);
+            List<VoiceCommandContentTile> retList = new List<VoiceCommandContentTile>();
+            int n = rawList.Count > 10 ? 10 : rawList.Count;
+            for (int i = 0; i < n; ++i)
+            {
+                string name = rawList[i].Name;
+                if (name.Length > 98) name = name.Remove(98);
+                name += $" {i}";
+                retList.Add(new VoiceCommandContentTile
+                {
+                    AppContext = rawList[i].Link,
+                    ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                    Title = name
+                });
+            }
+            return retList;
+        }
+
+        public static async Task<List<VoiceCommandContentTile>> GetBookDetailForCortana(string link)
+        {
+            ObservableCollection<BookDetail> rawList = await GetBookDetail(link);
+            int n = rawList.Count > 10 ? 10 : rawList.Count;
+            List<VoiceCommandContentTile> retList = new List<VoiceCommandContentTile>();
+            for (int i = 0; i < n; ++i)
+            {
+                var detail = rawList[i];
+
+                var name = detail.Name.Length > 98 ? detail.Name.Remove(98) : detail.Name;
+                name += $"{i}";
+
+                var author = detail.Author + ", " + detail.Press;
+                if (author.Length > 99) author = author.Remove(99);
+
+                var bookStatus = detail.Status;
+                var status = bookStatus[0].Place + "   " + bookStatus[0].Id + "\n";
+                foreach (var bookStatuse in bookStatus)
+                    status += bookStatuse.Status + "\n";
+                if (status.Length > 99) status = status.Remove(99);
+
+                retList.Add(new VoiceCommandContentTile
+                {
+                    AppContext = i,
+                    ContentTileType = VoiceCommandContentTileType.TitleWithText,
+                    Title = name,
+                    TextLine1 = author,
+                    TextLine2 = status
+                });
+            }
+            if (retList.Count == 1)
+            {
+                retList.Add(new VoiceCommandContentTile
+                {
+                    AppContext = -1,
+                    ContentTileType = VoiceCommandContentTileType.TitleWithText,
+                    Title = "点击返回",
+                    TextLine1 = "",
+                    TextLine2 = ""
+                });
+            }
+            return retList;
         }
     }
 }

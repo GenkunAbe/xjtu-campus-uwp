@@ -238,6 +238,9 @@
           "System.Xml.XmlSerializer": "4.0.10"
         }
       },
+      "Microsoft.NETNative.Analyzer/1.0.0": {
+        "type": "package"
+      },
       "Microsoft.VisualBasic/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -2073,6 +2076,9 @@
           "System.Xml.XmlSerializer": "4.0.10"
         }
       },
+      "Microsoft.NETNative.Analyzer/1.0.0": {
+        "type": "package"
+      },
       "Microsoft.VisualBasic/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -3823,6 +3829,9 @@
           "System.Xml.XmlSerializer": "4.0.10"
         }
       },
+      "Microsoft.NETNative.Analyzer/1.0.0": {
+        "type": "package"
+      },
       "Microsoft.VisualBasic/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -5539,6 +5548,9 @@
         "native": {
           "runtimes/win10-x64/native/_._": {}
         }
+      },
+      "Microsoft.NETNative.Analyzer/1.0.0": {
+        "type": "package"
       },
       "Microsoft.VisualBasic/10.0.0": {
         "type": "package",
@@ -7293,6 +7305,9 @@
           "System.Xml.XmlSerializer": "4.0.10"
         }
       },
+      "Microsoft.NETNative.Analyzer/1.0.0": {
+        "type": "package"
+      },
       "Microsoft.VisualBasic/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -9009,6 +9024,9 @@
         "native": {
           "runtimes/win10-x86/native/_._": {}
         }
+      },
+      "Microsoft.NETNative.Analyzer/1.0.0": {
+        "type": "package"
       },
       "Microsoft.VisualBasic/10.0.0": {
         "type": "package",
@@ -10762,6 +10780,9 @@
           "System.Text.Encoding.CodePages": "4.0.0",
           "System.Xml.XmlSerializer": "4.0.10"
         }
+      },
+      "Microsoft.NETNative.Analyzer/1.0.0": {
+        "type": "package"
       },
       "Microsoft.VisualBasic/10.0.0": {
         "type": "package",
@@ -12814,6 +12835,17 @@
         "runtimes/win81-x86/native/api-ms-win-core-sysinfo-l1-2-2.dll",
         "runtimes/win81-x86/native/api-ms-win-core-sysinfo-l1-2-3.dll",
         "runtimes/win81-x86/native/api-ms-win-security-cpwl-l1-1-0.dll"
+      ]
+    },
+    "Microsoft.NETNative.Analyzer/1.0.0": {
+      "sha512": "fU5kNj59Kdkats3mZ1CaZJCjTPSb1fxgIsIRFWZH7bzT0dRQih09qXlh4G9PowAwKOtLOQxyOOjtDZi6T7HRAg==",
+      "type": "package",
+      "files": [
+        "Microsoft.NETNative.Analyzer.1.0.0.nupkg.sha512",
+        "Microsoft.NETNative.Analyzer.nuspec",
+        "analyzers/dotnet/cs/NativeGatekeeper.dll",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
       ]
     },
     "Microsoft.VisualBasic/10.0.0": {
@@ -15584,6 +15616,7 @@
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.1.0",
+      "Microsoft.NETNative.Analyzer >= 1.0.0",
       "Newtonsoft.Json >= 9.0.1"
     ],
     "UAP,Version=v10.0": []

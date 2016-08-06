@@ -13,14 +13,6 @@
       <Navigate  />
     </Command>
 
-    <Command Name="QueryTable">
-      <Example>查询今天的课表</Example>
-      <ListenFor >[搜索]{Day}[的]课表</ListenFor>
-      <ListenFor >[查询]{Day}[的]课表</ListenFor>
-      <Feedback> 正在查询{Day}的课表</Feedback>
-      <Navigate />
-    </Command>
-
     <Command Name="NavToPage">
       <Example>跳转到充值界面</Example>
       <ListenFor>[跳转]到{Destination}界面</ListenFor>
@@ -28,12 +20,44 @@
       <Navigate />
     </Command>
     
+    <Command Name="QueryTable">
+      <Example> 查询今天的课表 或者 今天有什么课 </Example>
+      <ListenFor>[搜索]{Day}[的]课表</ListenFor>
+      <ListenFor>[查询]{Day}[的]课表</ListenFor>
+      <ListenFor>[查看]{Day}[的]课表</ListenFor>
+      <ListenFor>{Day}有什么课</ListenFor>
+      <ListenFor>{Day}上什么课</ListenFor>
+      <Feedback>正在查询{Day}的课表...</Feedback>
+      <VoiceCommandService Target="CampusService"/>
+    </Command>
+    
+    <Command Name="QueryLibrary">
+      <Example>搜索机器学习</Example>
+      <ListenFor>检索 {*} </ListenFor>
+      <ListenFor>搜索 {*} </ListenFor>
+      <Feedback>正在检索图书信息......</Feedback>
+      <VoiceCommandService Target="CampusService"/>
+    </Command>
+    
     <Command Name="QueryGrade">
       <Example>查询成绩</Example>
+      <ListenFor>查询[我的]成绩</ListenFor>
       <ListenFor>查询成绩</ListenFor>
       <Feedback>正在查询最新的成绩...</Feedback>
       <VoiceCommandService Target="CampusService"/>
     </Command>
+
+    <Command Name="QueryNews">
+      <Example>查看通知公告</Example>
+      <ListenFor>[查询]通知[公告]</ListenFor>
+      <ListenFor>[查询][通知]公告</ListenFor>
+      <ListenFor>[查看]通知[公告]</ListenFor>
+      <ListenFor>[查看][通知]公告</ListenFor>
+      <Feedback>正在查询最新的通知公告...</Feedback>
+      <VoiceCommandService Target="CampusService"/>
+    </Command>
+    
+    
 
     <!--PhraseList用来定义一组语音字符，指定相应规定的字符，用来消除歧义-->
     <!--使用 PhraseList 限制识别适用于一组相对较小的单词。当单词组过大（例如数百个单词）或者根本不应被限制时，
@@ -51,11 +75,17 @@
       <Item>设置</Item>
       <Item>关于</Item>
     </PhraseList>
+    
+    <!--<PhraseTopic Label="Book" Scenario="Natural Language">
+      <Subject>Movies</Subject>
+      <Subject>Music</Subject>
+    </PhraseTopic>-->
 
     <!--可以提高识别率，内部属性Subject可指定该关键字类型，比如 城市名 姓名  地址 等类型-->
     <!--<PhraseTopic Label="Day" Scenario="Natural Language">
       <Subject>Day</Subject>
     </PhraseTopic>-->
+  
   </CommandSet>
 
   <!-- 其他语言的 CommandSet -->

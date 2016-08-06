@@ -184,22 +184,22 @@ namespace XJTUCampus.Model
             return courses;
         }
 
-        public async Task<ObservableCollection<Course>> GetTodayCourse()
+        public async Task<ObservableCollection<Course>> GetTodayCourse(int offset = 0)
         {
             ObservableCollection<Course> courses = await GetCoursesList(UserData.NowWeek, false);
             string dt = DateTime.Today.DayOfWeek.ToString();
-            int today = GetToday(dt);
+            int today = (GetToday(dt) + offset) % 7;
             ObservableCollection<Course> result = new ObservableCollection<Course>();
-            if (1 <= today && today <= 5)
+            if (0 <= today && today <= 4)
             {
-                for (int i = 0; i < 4; ++i)
+                for (int i = 0; i < 5; ++i)
                 {
-                    result.Add(courses[today - 1 + i]);
+                    result.Add(courses[today * 5 + i]);
                 }
             }
             else
             {
-                for (int i = 0; i < 4; ++i)
+                for (int i = 0; i < 6; ++i)
                 {
                     result.Add(new Course());
                 }
@@ -212,21 +212,21 @@ namespace XJTUCampus.Model
             switch (td)
             {
                 case "Monday":
-                    return 1;
-                case "Tuesday":
-                    return 2;
-                case "Wednesday":
-                    return 3;
-                case "Thursday":
-                    return 4;
-                case "Friday":
-                    return 5;
-                case "Saturday":
-                    return 6;
-                case "Sunday":
-                    return 7;
-                default:
                     return 0;
+                case "Tuesday":
+                    return 1;
+                case "Wednesday":
+                    return 2;
+                case "Thursday":
+                    return 3;
+                case "Friday":
+                    return 4;
+                case "Saturday":
+                    return 5;
+                case "Sunday":
+                    return 6;
+                default:
+                    return -1;
             }
         }
 
