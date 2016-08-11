@@ -8,7 +8,7 @@
     xmlns:model="using:XJTUCampus.Model"
     mc:Ignorable="d">
 
-    <Grid Background="White">
+    <Grid Background="{ThemeResource AppBackgroundBaseBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -17,7 +17,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:NewsGlance">
                         <RelativePanel>
-                            <TextBlock Name="NewsTitle" Text="{x:Bind Title}" />
+                            <TextBlock Name="NewsTitle" Text="{x:Bind Title}"/>
                         </RelativePanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

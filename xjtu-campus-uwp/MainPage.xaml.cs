@@ -19,12 +19,14 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using xjtu_campus_uwp.View;
+using xjtu_campus_uwp.ViewModel;
 
 namespace xjtu_campus_uwp
 {
 
     public sealed partial class MainPage : Page
     {
+        private CurrentTheme Theme = new CurrentTheme();
         public MainPage()
         {
             this.InitializeComponent();
@@ -52,7 +54,7 @@ namespace xjtu_campus_uwp
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             { 
                 StatusBar sb = StatusBar.GetForCurrentView();
-                sb.BackgroundColor = Color.FromArgb(255, 81, 157, 73);
+                sb.BackgroundColor = Color.FromArgb(255, 22, 86, 22);
                 sb.BackgroundOpacity = 1;
             }
 
@@ -60,7 +62,7 @@ namespace xjtu_campus_uwp
             ApplicationView appView = ApplicationView.GetForCurrentView();
             ApplicationViewTitleBar titleBar = appView.TitleBar;
             // TitleBar Color
-            Color bc = Color.FromArgb(255, 81, 157, 73);
+            Color bc = Color.FromArgb(255, 22, 86, 22);
             titleBar.BackgroundColor = bc;
             titleBar.InactiveBackgroundColor = bc;
             // Button in TitleBar
@@ -190,6 +192,43 @@ namespace xjtu_campus_uwp
         }
 
 
-        
+        private void ThemeBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            Color bc;
+            if (Theme.Theme == ElementTheme.Light)
+            {
+                Theme.Theme = ElementTheme.Dark;
+                bc = Color.FromArgb(255, 22, 86, 22);
+            }
+            else
+            {
+                Theme.Theme = ElementTheme.Light;
+                bc = Color.FromArgb(255, 81, 157, 73);
+            }
+            
+            
+
+            // Setting StatusBar Color
+            // For Mobile
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                StatusBar sb = StatusBar.GetForCurrentView();
+                sb.BackgroundColor = bc;
+                sb.BackgroundOpacity = 1;
+            }
+
+            // For Desktop
+            ApplicationView appView = ApplicationView.GetForCurrentView();
+            ApplicationViewTitleBar titleBar = appView.TitleBar;
+            // TitleBar Color
+            
+            titleBar.BackgroundColor = bc;
+            titleBar.InactiveBackgroundColor = bc;
+            // Button in TitleBar
+            titleBar.ButtonBackgroundColor = bc;
+            titleBar.ButtonHoverBackgroundColor = bc;
+            titleBar.ButtonPressedBackgroundColor = bc;
+            titleBar.ButtonInactiveBackgroundColor = bc;
+        }
     }
 }

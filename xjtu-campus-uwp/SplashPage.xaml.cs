@@ -45,7 +45,7 @@ namespace xjtu_campus_uwp
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
                 StatusBar sb = StatusBar.GetForCurrentView();
-                sb.BackgroundColor = Color.FromArgb(255, 81, 157, 73);
+                sb.BackgroundColor = Color.FromArgb(255, 22, 86, 22);
                 sb.BackgroundOpacity = 1;
             }
 
@@ -53,7 +53,7 @@ namespace xjtu_campus_uwp
             ApplicationView appView = ApplicationView.GetForCurrentView();
             ApplicationViewTitleBar titleBar = appView.TitleBar;
             // TitleBar Color
-            Color bc = Color.FromArgb(255, 81, 157, 73);
+            Color bc = Color.FromArgb(255, 22, 86, 22);
             titleBar.BackgroundColor = bc;
             titleBar.InactiveBackgroundColor = bc;
             // Button in TitleBar

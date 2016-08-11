@@ -5,8 +5,9 @@
     xmlns:local="using:xjtu_campus_uwp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:xjtu_campus_uwp.Models"
-    mc:Ignorable="d">
+    xmlns:models="using:XJTUCampus.Model"
+    mc:Ignorable="d"
+    RequestedTheme="{x:Bind Theme.Theme, Mode=OneWay}">
 
 
     <Grid>
@@ -15,19 +16,19 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Background="#5db754" Margin="0,0,0,0" Grid.Row="0">
+        <StackPanel Orientation="Horizontal" Background="{ThemeResource AppBackgroundHighBrush}" Margin="0,0,0,0" Grid.Row="0">
             <TextBlock Name="Logo"
                        FontSize="26" 
                        FontFamily="Microsoft YaHei UI" 
-                       Foreground="White" 
+                       Foreground="{ThemeResource AppTextHighBrush}" 
                        Text="XJTU Campus"
                        Margin="12,10,0,10"/>
         </StackPanel>
 
-        <Pivot Name="MainPivot" Grid.Row="1" Background="White" SelectionChanged="Pivot_OnSelectionChanged">
+        <Pivot Name="MainPivot" Grid.Row="1" Background="{ThemeResource AppBackgroundBaseBrush}" SelectionChanged="Pivot_OnSelectionChanged">
 
             <PivotItem Header="HOME">
-                <Frame Name="HomeFrame"></Frame>
+                <Frame Name="HomeFrame"/>
             </PivotItem>
 
             <PivotItem Header="NEWS">
@@ -39,22 +40,23 @@
             </PivotItem>
 
             <PivotItem Header="LIBRARY">
-                <Frame Name="LibraryFrame" />
+                <Frame Name="LibraryFrame"/>
             </PivotItem>
 
             <PivotItem Header="GRADE">
-                <Frame Name="GradeFrame" />
+                <Frame Name="GradeFrame"/>
             </PivotItem>
 
             <PivotItem Header="CARD">
-                <Frame Name="CardFrame" />
+                <Frame Name="CardFrame"/>
             </PivotItem>
         </Pivot>
 
     </Grid>
 
     <Page.BottomAppBar>
-        <CommandBar IsOpen="False" ClosedDisplayMode="Minimal"  Background="#a4e39e" Margin="0,0,0,-3" Opacity="1">
+        <CommandBar IsOpen="False" ClosedDisplayMode="Minimal"  Background="{ThemeResource AppBackgroundMidBrush}" Opacity="1.0">
+            <AppBarButton x:Name="ThemeBtn" Label="Theme" Icon="Contact2" Click="ThemeBtn_OnClick"/>
             <AppBarButton x:Name="Setting" Label="Setting" Icon="Setting" Click="Setting_OnClick_Click"/>
             <AppBarButton x:Name="Refresh" Label="Refresh" Icon="Refresh" Click="Refresh_Click"/>
             <AppBarButton x:Name="Gpa" Label="GPA" Icon="Calculator" Click="Gpa_Click"/>

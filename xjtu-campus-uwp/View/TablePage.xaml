@@ -9,20 +9,20 @@
     
     <Page.Resources>
         <Style x:Name="GridTileStyle" TargetType="Grid">
-            <Setter Property="Background" Value="#a4e39e" />
+            <Setter Property="Background" Value="{ThemeResource AppBackgroundMidBrush}" />
             <Setter Property="Margin" Value="2,1,1,1" />
         </Style>
         <Style x:Name="TextBlockTileStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="Margin" Value="2,2,2,2"/>
-            <Setter Property="Foreground" Value="#063002"/>
+            <Setter Property="Foreground" Value="{ThemeResource AppTextLowBrush}"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </Page.Resources>
 
-    <Grid Name="MainGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Name="MainGrid" Background="{ThemeResource AppBackgroundBaseBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -33,10 +33,10 @@
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
 
-        <ComboBox Name="WeekListCombBox" Grid.Row="0" Grid.Column="0" Margin="3,3,0,0" BorderBrush="White" SelectionChanged="WeekListCombBox_OnSelectionChanged">
+        <ComboBox Name="WeekListCombBox" Grid.Row="0" Grid.Column="0" Margin="3,3,0,0" BorderBrush="{ThemeResource AppBackgroundBaseBrush}" Background="{ThemeResource AppBackgroundBaseBrush}" SelectionChanged="WeekListCombBox_OnSelectionChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}"></TextBlock>
+                    <TextBlock Text="{Binding}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
@@ -49,21 +49,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Column="0">
-                <TextBlock Text="1" VerticalAlignment="Center" TextAlignment="Center"/>
-            </Grid>
-            <Grid Column="1">
-                <TextBlock Text="2" VerticalAlignment="Center" TextAlignment="Center"/>
-            </Grid>
-            <Grid Column="2">
-                <TextBlock Text="3" VerticalAlignment="Center" TextAlignment="Center"/>
-            </Grid>
-            <Grid Column="3">
-                <TextBlock Text="4" VerticalAlignment="Center" TextAlignment="Center"/>
-            </Grid>
-            <Grid Column="4">
-                <TextBlock Text="5" VerticalAlignment="Center" TextAlignment="Center"/>
-            </Grid>
+
+            <TextBlock Grid.Column="0" Text="1" VerticalAlignment="Center" TextAlignment="Center"/>
+            <TextBlock Grid.Column="1" Text="2" VerticalAlignment="Center" TextAlignment="Center"/>
+            <TextBlock Grid.Column="2" Text="3" VerticalAlignment="Center" TextAlignment="Center"/>
+            <TextBlock Grid.Column="3" Text="4" VerticalAlignment="Center" TextAlignment="Center"/>
+            <TextBlock Grid.Column="4" Text="5" VerticalAlignment="Center" TextAlignment="Center"/>
+
         </Grid>
 
         <Grid Row="1" Column="0" Margin="3,3,3,3">

@@ -107,5 +107,10 @@ namespace xjtu_campus_uwp.View
             HelloSwitch.IsOn = true;
             PayPasswordBox.Password = "";
         }
+
+        private void ThemeSwitch_OnToggled(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

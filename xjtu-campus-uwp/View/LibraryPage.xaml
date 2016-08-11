@@ -8,7 +8,7 @@
     xmlns:model="using:XJTUCampus.Model"
     mc:Ignorable="d">
 
-    <Grid Background="White">
+    <Grid Background="{ThemeResource AppBackgroundBaseBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>

@@ -8,12 +8,12 @@
     xmlns:model="using:XJTUCampus.Model"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource AppBackgroundBaseBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Detail"></TextBlock>
+        <TextBlock Grid.Row="0" Text="Detail"/>
         <ListView Name="BookDetailList" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:BookDetail">

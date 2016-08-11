@@ -8,7 +8,7 @@
     mc:Ignorable="d">
    
 
-    <Grid Background="{StaticResource MainColor}">
+    <Grid Background="{ThemeResource AppBackgroundHighBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -24,7 +24,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="NetID: " Margin="0,0,38,0" Foreground="White" FontSize="18"/>
+            <TextBlock Grid.Column="0" Text="NetID: " Margin="0,0,38,0" Foreground="{ThemeResource AppTextHighBrush}" FontSize="18"/>
             <TextBox Grid.Column="1" Name="NetIdTextBox" Margin="10,0,0,0"/>
         </Grid>
 
@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Password: " Margin="0,0,10,0" Foreground="White" FontSize="18"/>
+            <TextBlock Grid.Column="0" Text="Password: " Margin="0,0,10,0" Foreground="{ThemeResource AppTextHighBrush}" FontSize="18"/>
             <PasswordBox Grid.Column="1" Name="PasswordTextBox" Margin="10,0,0,0"/>
         </Grid>
 
@@ -42,7 +42,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Save Password:" Margin="0,0,10,0" Foreground="White" FontSize="18"/>
+            <TextBlock Grid.Column="0" Text="Save Password:" Margin="0,0,10,0" Foreground="{ThemeResource AppTextHighBrush}" FontSize="18"/>
             <ToggleSwitch Name="PasswordSaving" Grid.Column="1" Margin="5,-5,0,0" OffContent="" OnContent="" IsOn="True"/>
         </Grid>
 
@@ -53,12 +53,12 @@
                     Content="Login" 
                     HorizontalAlignment="Center" 
                     Click="LoginButton_OnClick" 
-                    Foreground="White"
+                    Foreground="{ThemeResource AppTextHighBrush}"
                     Padding="20,5,20,5"/>
         </Grid>
         <RelativePanel Grid.Row="4">
             <ProgressRing x:Name="LoginProgressRing" Width="50" Height="50" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,10,0,30"/>
-            <TextBlock x:Name="ResultTextBlock" FontSize="20" Foreground="White" RelativePanel.AlignBottomWith="LoginProgressRing" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+            <TextBlock x:Name="ResultTextBlock" FontSize="20" Foreground="{ThemeResource AppTextHighBrush}" RelativePanel.AlignBottomWith="LoginProgressRing" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
         </RelativePanel>
     </Grid>
 

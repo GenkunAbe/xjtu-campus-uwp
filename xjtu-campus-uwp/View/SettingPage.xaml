@@ -7,8 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{StaticResource MainColor}">
+    <Grid Background="{ThemeResource AppBackgroundHighBrush}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -24,14 +25,18 @@
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
             <PasswordBox Grid.Column="0" Name="PayPasswordBox" FontSize="13" PlaceholderText="Enter your QUERY password"/>
-            <Button Grid.Column="1" RelativePanel.RightOf="PayPasswordBox" Content="OK" Foreground="White" Click="ButtonOK_OnClick" Margin="0,-2,0,-2"/>
+            <Button Grid.Column="1" RelativePanel.RightOf="PayPasswordBox" Content="OK" Foreground="{ThemeResource AppTextHighBrush}" Click="ButtonOK_OnClick" Margin="0,-2,0,-2"/>
         </Grid>
-        <TextBlock Name="HelloLabel" Grid.Row="0" Grid.Column="0" Text="Using Windows Hello" Margin="30,50,20,20" FontSize="22" Foreground="White"/>
+        
+        <TextBlock Name="HelloLabel" Grid.Row="0" Grid.Column="0" Text="Using Windows Hello" Margin="30,50,20,20" FontSize="22" Foreground="{ThemeResource AppTextHighBrush}"/>
         <ToggleSwitch Name="HelloSwitch" Grid.Row="0" Grid.Column="1" OffContent="" OnContent="" Toggled="HelloSwitch_OnToggled" Margin="0,45,0,20"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Donate" Margin="30,20,20,50" FontSize="22" Foreground="White"/>
+        <TextBlock Name="ThemeLabel" Grid.Row="1" Grid.Column="0" Text="Theme" Margin="30,50,20,20" FontSize="22" Foreground="{ThemeResource AppTextHighBrush}"/>
+        <ToggleSwitch Name="ThemeSwitch" Grid.Row="1" Grid.Column="1" OffContent="" OnContent="" Toggled="ThemeSwitch_OnToggled" Margin="0,45,0,20"/>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="About" Margin="30,20,20,50" FontSize="22" Foreground="White"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Donate" Margin="30,20,20,50" FontSize="22" Foreground="{ThemeResource AppTextHighBrush}"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="About" Margin="30,20,20,50" FontSize="22" Foreground="{ThemeResource AppTextHighBrush}"/>
 
     </Grid>
 </Page>
