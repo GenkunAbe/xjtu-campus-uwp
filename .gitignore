@@ -1,8 +1,8 @@
 .vs/
 .vscode/
-xjtu-campus-uwp/obj/
-xjtu-campus-uwp/bin/
-CampusBackgroundTask/obj/
-CampusBackgroundTask/bin/
-XJTUCampus.Model/bin/
-XJTUCampus.Model/obj/
+XJTUCampus/obj/
+XJTUCampus/bin/
+XJTUCampus.Core/obj/
+XJTUCampus.Core/bin/
+XJTUCampus.Service/bin/
+XJTUCampus.Service/obj/

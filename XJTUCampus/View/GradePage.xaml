@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="XJTUCampus.View.GradePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:XJTUCampus.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:XJTUCampus.Core.Model"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource AppBackgroundBaseBrush}">
+        <ListView Name="ScoreListView" ItemsSource="{x:Bind Grades}" >
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="model:Grade">
+                    <RelativePanel>
+                        <TextBlock Name="NameText"
+                                       FontSize="16"
+                                       FontFamily="Mocrosoft YaHei UI"
+                                       Margin="0,3,35,3"
+                                       Text="{x:Bind Name}"/>
+                        <TextBlock Name="ScoreText"
+                                       FontSize="16"
+                                       FontFamily="Microsoft YaHei UI"
+                                       Margin="0,2,0,3"
+                                       RelativePanel.AlignRightWithPanel="True"
+                                       HorizontalAlignment="Right"
+                                       Text="{x:Bind Score}"/>
+                    </RelativePanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="IsHitTestVisible" Value="False"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+    </Grid>
+    
+</Page>

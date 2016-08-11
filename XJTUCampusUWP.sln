@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XJTUCampus", "xjtu-campus-uwp\XJTUCampus.csproj", "{29AAC130-6C92-4740-83EA-0BACF1D3C327}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XJTUCampus", "XJTUCampus\XJTUCampus.csproj", "{29AAC130-6C92-4740-83EA-0BACF1D3C327}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusService", "CampusBackgroundTask\CampusService.csproj", "{87F1B80C-9AFB-4E0B-8F2E-A7A7B12BE998}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XJTUCampus.Service", "XJTUCampus.Service\XJTUCampus.Service.csproj", "{87F1B80C-9AFB-4E0B-8F2E-A7A7B12BE998}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XJTUCampus.Model", "XJTUCampus.Model\XJTUCampus.Model.csproj", "{2C01E3FA-7B73-48E8-AEC0-F8C99BFBFD63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XJTUCampus.Core", "XJTUCampus.Core\XJTUCampus.Core.csproj", "{2C01E3FA-7B73-48E8-AEC0-F8C99BFBFD63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
