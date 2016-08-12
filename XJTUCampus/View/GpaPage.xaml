@@ -7,8 +7,22 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:XJTUCampus.Core.Model"
     mc:Ignorable="d">
+    
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style x:Key="GradeDetailTitleStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Margin" Value="3"/>
+            </Style>
+            <Style x:Key="GradeDetailScoreStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Margin" Value="3"/>
+                <Setter Property="TextAlignment" Value="Left"/>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
 
-    <Grid Background="{ThemeResource AppBackgroundBaseBrush}">
+    <Grid Background="{ThemeResource BackgroundPanelBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -58,25 +72,26 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="12" Text="标准成绩" Margin="3"/>
-                            <TextBlock Name="GradeStandard" Grid.Row="0" Grid.Column="1" FontSize="12" Text="{x:Bind Standard}" Margin="3" TextAlignment="Left"/>
-                            <TextBlock Grid.Row="0" Grid.Column="2" FontSize="12" Text="平时成绩" Margin="3"/>
-                            <TextBlock Name="GradeDaily" Grid.Row="0" Grid.Column="3" FontSize="12" Text="{x:Bind Daily}" Margin="3" TextAlignment="Left"/>
-                            <TextBlock Grid.Row="0" Grid.Column="4" FontSize="12" Text="期中成绩" Margin="3"/>
-                            <TextBlock Name="GradeInterim" Grid.Row="0" Grid.Column="5" FontSize="12" Text="{x:Bind Interim}" Margin="3" TextAlignment="Left"/>
-                            <TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Text="实验成绩" Margin="3"/>
-                            <TextBlock Name="GradeExperiment" Grid.Row="1" Grid.Column="1" FontSize="12" Text="{x:Bind Experiment}" Margin="3" TextAlignment="Left"/>
-                            <TextBlock Grid.Row="1" Grid.Column="2" FontSize="12" Text="期末成绩" Margin="3"/>
-                            <TextBlock Name="GradeFinal" Grid.Row="1" Grid.Column="3" FontSize="12" Text="{x:Bind Final}" Margin="3" TextAlignment="Left"/>
-                            <TextBlock Grid.Row="1" Grid.Column="4" FontSize="12" Text="其它成绩" Margin="3"/>
-                            <TextBlock Name="GradeOther" Grid.Row="1" Grid.Column="5" FontSize="12" Text="{x:Bind Other}" Margin="3" TextAlignment="Left"/>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="标准成绩" Style="{StaticResource GradeDetailTitleStyle}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="平时成绩" Style="{StaticResource GradeDetailTitleStyle}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="4" Text="期中成绩" Style="{StaticResource GradeDetailTitleStyle}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="实验成绩" Style="{StaticResource GradeDetailTitleStyle}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="期末成绩" Style="{StaticResource GradeDetailTitleStyle}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="4" Text="其它成绩" Style="{StaticResource GradeDetailTitleStyle}"/>
+                            
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind Standard}" Style="{StaticResource GradeDetailScoreStyle}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="3" Text="{x:Bind Daily}" Style="{StaticResource GradeDetailScoreStyle}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="5" Text="{x:Bind Interim}" Style="{StaticResource GradeDetailScoreStyle}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind Experiment}" Style="{StaticResource GradeDetailScoreStyle}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="3" Text="{x:Bind Final}" Style="{StaticResource GradeDetailScoreStyle}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="5" Text="{x:Bind Other}" Style="{StaticResource GradeDetailScoreStyle}"/>
                         </Grid>
                     </Grid>
                 </DataTemplate>

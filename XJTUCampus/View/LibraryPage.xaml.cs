@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -57,7 +58,7 @@ namespace XJTUCampus.View
         private void BookGlanceItem_OnClick(object sender, ItemClickEventArgs e)
         {
             BookGlance book = (BookGlance) e.ClickedItem;
-            Frame.Navigate(typeof(View.BookDetailPage), book.Link);
+            Frame?.Navigate(typeof(BookDetailPage), book?.Link);
         }
     }
 }

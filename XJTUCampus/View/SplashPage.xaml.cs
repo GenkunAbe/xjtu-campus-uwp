@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using XJTUCampus.Core.Model;
+using XJTUCampus.ViewModel.Event;
 
 namespace XJTUCampus.View
 {
@@ -41,26 +42,7 @@ namespace XJTUCampus.View
         {
 
             // Setting StatusBar Color
-            // For Mobile
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                StatusBar sb = StatusBar.GetForCurrentView();
-                sb.BackgroundColor = Color.FromArgb(255, 22, 86, 22);
-                sb.BackgroundOpacity = 1;
-            }
-
-            // For Desktop
-            ApplicationView appView = ApplicationView.GetForCurrentView();
-            ApplicationViewTitleBar titleBar = appView.TitleBar;
-            // TitleBar Color
-            Color bc = Color.FromArgb(255, 22, 86, 22);
-            titleBar.BackgroundColor = bc;
-            titleBar.InactiveBackgroundColor = bc;
-            // Button in TitleBar
-            titleBar.ButtonBackgroundColor = bc;
-            titleBar.ButtonHoverBackgroundColor = bc;
-            titleBar.ButtonPressedBackgroundColor = bc;
-            titleBar.ButtonInactiveBackgroundColor = bc;
+            ThemeChangedEvent.SetStatusBarColor(ElementTheme.Default);
 
             // Create a Frame to act as the navigation context and navigate to the first page
             bool isAutoLoginVaild = await Authetication.AutoLoginAutheticate();

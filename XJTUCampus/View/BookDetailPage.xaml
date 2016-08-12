@@ -8,13 +8,8 @@
     xmlns:model="using:XJTUCampus.Core.Model"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource AppBackgroundBaseBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Detail"/>
-        <ListView Name="BookDetailList" Grid.Row="1">
+    <Grid Background="{ThemeResource BackgroundPanelBrush}">
+        <ListView Name="BookDetailList" ItemsSource="{x:Bind Books}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:BookDetail">
                     <Grid Margin="2,20,2,20">
@@ -37,13 +32,14 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{x:Bind Place}" Margin="1,0,5,0"/>
-                                        <TextBlock Grid.Column="1" Text="{x:Bind Id}" Margin="1,0,5,0"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind Id}" Margin="1,0,5,0" TextAlignment="Center"/>
                                         <TextBlock Grid.Column="2" Text="{x:Bind Status}" Margin="1,0,1,0"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                     <Setter Property="Margin" Value="0,-5,0,-5"></Setter>
                                     <Setter Property="IsHitTestVisible" Value="False"/>
                                 </Style>
@@ -54,6 +50,7 @@
             </ListView.ItemTemplate>
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="IsHitTestVisible" Value="False"/>
                 </Style>
             </ListView.ItemContainerStyle>

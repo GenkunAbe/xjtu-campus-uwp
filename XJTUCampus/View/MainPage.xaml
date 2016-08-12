@@ -16,16 +16,16 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Background="{ThemeResource AppBackgroundHighBrush}" Margin="0,0,0,0" Grid.Row="0">
+        <StackPanel Orientation="Horizontal" Background="{ThemeResource BackgroundPrimaryBrush}" Margin="0,0,0,0" Grid.Row="0">
             <TextBlock Name="Logo"
                        FontSize="26" 
                        FontFamily="Microsoft YaHei UI" 
-                       Foreground="{ThemeResource AppTextHighBrush}" 
+                       Foreground="{ThemeResource TextIconsBrush}" 
                        Text="XJTU Campus"
                        Margin="12,10,0,10"/>
         </StackPanel>
 
-        <Pivot Name="MainPivot" Grid.Row="1" Background="{ThemeResource AppBackgroundBaseBrush}" SelectionChanged="Pivot_OnSelectionChanged">
+        <Pivot Name="MainPivot" Grid.Row="1" Background="{ThemeResource BackgroundPanelBrush}" SelectionChanged="Pivot_OnSelectionChanged">
 
             <PivotItem Header="HOME">
                 <Frame Name="HomeFrame"/>
@@ -55,7 +55,7 @@
     </Grid>
 
     <Page.BottomAppBar>
-        <CommandBar IsOpen="False" ClosedDisplayMode="Minimal"  Background="{ThemeResource AppBackgroundMidBrush}" Opacity="1.0">
+        <CommandBar IsOpen="False" ClosedDisplayMode="Minimal"  Background="{ThemeResource BackgroundLightPrimaryBrush}" Opacity="1.0">
             <AppBarButton x:Name="ThemeBtn" Label="Theme" Icon="Contact2" Click="ThemeBtn_OnClick"/>
             <AppBarButton x:Name="Setting" Label="Setting" Icon="Setting" Click="Setting_OnClick_Click"/>
             <AppBarButton x:Name="Refresh" Label="Refresh" Icon="Refresh" Click="Refresh_Click"/>

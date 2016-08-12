@@ -7,13 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Background="{ThemeResource AppBackgroundHighBrush}">
+    <StackPanel Background="#FF5DB754">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock FontSize="75"
         		HorizontalAlignment="Center"
         		VerticalAlignment="Center"
         		Margin="0,180,0,0"
-        		Foreground="{ThemeResource AppTextHighBrush}"
+        		Foreground="#FFFFFFFF"
                 FontFamily="Microsoft YaHei UI">
         		<Run Text="XJTU"/>
             </TextBlock>
