@@ -37,8 +37,8 @@ namespace XJTUCampus.View
 
         private async void GetNewsGlanceList()
         {
-            var tmp = await newsManager.GetStoredNewsList();
-            if (NewsList.Count == 0)
+            ObservableCollection<NewsGlance> tmp = await newsManager.GetStoredNewsList();
+            if (tmp.Count == 0)
                 tmp = await newsManager.GetNewNewsList();
             NewsList.Clear();
             foreach (NewsGlance glance in tmp)
@@ -50,8 +50,8 @@ namespace XJTUCampus.View
 
         private async void GetGradeList()
         {
-            var tmp = await gradeManager.GetStoredGrades();
-            if (NewsList.Count == 0)
+            ObservableCollection<Grade> tmp = await gradeManager.GetStoredGrades();
+            if (tmp.Count == 0)
                 tmp = await gradeManager.GetNewGrades();
             GradeList.Clear();
             foreach (Grade grade in tmp)

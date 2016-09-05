@@ -62,7 +62,8 @@ namespace XJTUCampus.View
                 textBlock.Style = TextBlockTileStyle;
                 grid.Style = GridTileStyle;
 
-                textBlock.Text = Courses[i].Name;
+                Course course = Courses[i];
+                textBlock.Text = course.Name + "\n" + (course.Name == "" ? "" : course.Place.Substring(4));
 
                 grid.Children.Add(textBlock);
                 TableGrid.Children.Add(grid);
