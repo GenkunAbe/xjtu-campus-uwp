@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using XJTUCampus.Core.Model;
 using XJTUCampus.View;
 
 namespace XJTUCampus
@@ -33,6 +34,7 @@ namespace XJTUCampus
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            getNowWeek();
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
@@ -110,6 +112,17 @@ namespace XJTUCampus
             Window.Current.Activate();
         }
 
-
+        public static async void getNowWeek()
+        {
+            string uri = UserData.Host + "commqry?type=week";
+            try
+            {
+                UserData.NowWeek = int.Parse(await HttpHelper.GetResponse(uri));
+            }
+            catch (Exception)
+            {
+                UserData.NowWeek = 1;
+            }
+        }
     }
 }

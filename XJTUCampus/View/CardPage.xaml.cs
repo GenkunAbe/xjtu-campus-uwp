@@ -60,9 +60,15 @@ namespace XJTUCampus.View
             }
         }
 
-        private async void LoadCaptcha()
+        private async void LoadCaptcha(bool isChange = false)
         {
-            CaptchaImg.Source = await CardManager.GetCaptcha();
+            ChangeCaptchaButton.Visibility = Visibility.Collapsed;
+            CaptchaImg.Visibility = Visibility.Collapsed;
+            LoadingCaptchaProgressRing.IsActive = true;
+            CaptchaImg.Source = await (isChange ? CardManager.ChangeCaptcha() : CardManager.GetCaptcha());
+            LoadingCaptchaProgressRing.IsActive = false;
+            CaptchaImg.Visibility = Visibility.Visible;
+            ChangeCaptchaButton.Visibility = Visibility.Visible;
         }
 
         private async void SubmitButton_OnClick (object sender, RoutedEventArgs e)
@@ -135,12 +141,17 @@ namespace XJTUCampus.View
             }
             PayResult result = await CardManager.Pay(rawPsw, code, amt);
 
+            LoadCaptcha(true);
+            if (!result.ret)
+            {
+                CodeTextBox.Text = "";
+            }
             ResultTextBlock.Text = result.msg;
         }
 
         private void ButtonCaptcha_OnClick(object sender, RoutedEventArgs e)
         {
-            LoadCaptcha();
+            LoadCaptcha(true);
         }
     }
 }

@@ -37,6 +37,13 @@ namespace XJTUCampus.Core.Model
             return bitmap;
         }
 
+        public static async Task<BitmapImage> ChangeCaptcha()
+        {
+            string uri = UserData.Host + "cardchange?usr=" + UserData.NetId + "&psw=" + UserData.Psw;
+            BitmapImage bitmap = await HttpHelper.GetImage(uri);
+            return bitmap;
+        }
+
         public static async Task<PayResult> Pay(string rawPsw, string code, string amt)
         {
             string uri = UserData.Host + "cardpost?usr=" + UserData.NetId + "&psw=" + UserData.Psw + "&rawpsw=" + rawPsw +

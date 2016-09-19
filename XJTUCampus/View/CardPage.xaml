@@ -47,8 +47,9 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Name="CaptchaImg" Width="60" Height="20" HorizontalAlignment="Center" Margin="0,0,15,0"/>
-            <Button Grid.Column="0" Width="60" Height="20" HorizontalAlignment="Center" Margin="0,0,15,0" Opacity="0.1" Click="ButtonCaptcha_OnClick"/>
+            <ProgressRing Grid.Column="0" Width="60" Height="20" x:Name="LoadingCaptchaProgressRing" HorizontalAlignment="Center" Margin="0,0,15,0"/>
+            <Image Grid.Column="0" Width="60" Height="20" Name="CaptchaImg" HorizontalAlignment="Center" Margin="0,0,15,0"/>
+            <Button Grid.Column="0" Width="60" Height="20" Name="ChangeCaptchaButton" HorizontalAlignment="Center" Margin="0,0,15,0" Opacity="0.1" Click="ButtonCaptcha_OnClick"/>
             <TextBox Grid.Column="1" Name="CodeTextBox" Margin="10,0,0,0" InputScope="Number"/>
         </Grid>
 

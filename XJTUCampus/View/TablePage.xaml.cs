@@ -32,6 +32,12 @@ namespace XJTUCampus.View
             
             _TableManager = new TableManager();
 
+            SetWeekList();
+            
+        }
+
+        private void SetWeekList()
+        {
             WeekList.Clear();
             WeekListCombBox.ItemsSource = WeekList;
             for (int i = 1; i <= 16; ++i)
@@ -41,7 +47,6 @@ namespace XJTUCampus.View
                 if (i == UserData.NowWeek)
                     WeekListCombBox.SelectedItem = item;
             }
-            
         }
 
         private async void GetNewCourses()
