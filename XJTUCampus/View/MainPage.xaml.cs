@@ -85,7 +85,7 @@ namespace XJTUCampus.View
                     NewsPage.Refresh();
                     break;
                 case 2:
-                    TableFrame.Navigate(typeof(TablePage));
+                    TablePage.Refresh();
                     break;
                 case 3:
                     LibraryFrame.Navigate(typeof(LibraryPage));

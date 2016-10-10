@@ -26,14 +26,14 @@ namespace XJTUCampus.View
         public ObservableCollection<string> WeekList = new ObservableCollection<string>();
         private ObservableCollection<Course> Courses;
         private TableManager _TableManager;
+        public static TablePage _this;
         public TablePage()
         {
             this.InitializeComponent();
-            
+            _this = this;
             _TableManager = new TableManager();
 
             SetWeekList();
-            
         }
 
         private void SetWeekList()
@@ -51,7 +51,7 @@ namespace XJTUCampus.View
 
         private async void GetNewCourses()
         {
-            Courses = await _TableManager.GetCoursesList(2, true);
+            Courses = await _TableManager.GetCoursesList(UserData.NowWeek, true);
             SetCourses();
         }
 
@@ -97,6 +97,11 @@ namespace XJTUCampus.View
                     Debug.WriteLine("Select Week Failed!");
                 }
             }
+        }
+
+        public static void Refresh()
+        {
+            _this.GetNewCourses();
         }
     }
 }
