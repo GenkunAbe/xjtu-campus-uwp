@@ -75,12 +75,12 @@ namespace XJTUCampus.Core.Model
     public class TableManager
     {
 
-        private string RawCourse;
-        private ObservableCollection<Course> Courses;
+        private string _rawCourse;
+        private readonly ObservableCollection<Course> Courses;
 
         public TableManager()
         {
-            RawCourse = "";
+            _rawCourse = "";
             Courses = new ObservableCollection<Course>();
         }
 
@@ -95,8 +95,8 @@ namespace XJTUCampus.Core.Model
             else
                 rawCourse = await GetStoredRawCourses();
 
-            if (isNew && RawCourse == "") return GetInitCourses();
-            if (!isNew && RawCourse == "") rawCourse = await GetNewRawCourses();
+            if (isNew && _rawCourse == "") return GetInitCourses();
+            if (!isNew && _rawCourse == "") rawCourse = await GetNewRawCourses();
 
             foreach (Course course in rawCourse)
             {
@@ -116,7 +116,7 @@ namespace XJTUCampus.Core.Model
         private async Task<ObservableCollection<Course>> GetNewRawCourses()
         {
             string uri = UserData.Host + "table?usr=" + UserData.NetId + "&psw=" + UserData.Psw;
-            RawCourse = await HttpHelper.GetResponse(uri);
+            _rawCourse = await HttpHelper.GetResponse(uri);
 
 
             StorageFolder folder = ApplicationData.Current.LocalFolder;
@@ -132,7 +132,7 @@ namespace XJTUCampus.Core.Model
 
             try
             {
-                await FileIO.WriteTextAsync(tableFile, RawCourse);
+                await FileIO.WriteTextAsync(tableFile, _rawCourse);
             }
             catch (Exception)
             {
@@ -149,11 +149,11 @@ namespace XJTUCampus.Core.Model
             {
                 StorageFolder folder = ApplicationData.Current.LocalFolder;
                 StorageFile tableFile = await folder.GetFileAsync("table");
-                RawCourse = await FileIO.ReadTextAsync(tableFile);
+                _rawCourse = await FileIO.ReadTextAsync(tableFile);
             }
             catch (Exception)
             {
-                RawCourse = "";
+                _rawCourse = "";
                 Debug.WriteLine("Open Stored Table Failed!");
             }
             return JsonCourseParser();
@@ -164,9 +164,9 @@ namespace XJTUCampus.Core.Model
         {
             ObservableCollection<Course> courses = new ObservableCollection<Course>();
 
-            if (RawCourse == "") return courses;
+            if (_rawCourse == "") return courses;
 
-            JsonArray divs = JsonArray.Parse(RawCourse);            
+            JsonArray divs = JsonArray.Parse(_rawCourse);            
             foreach (var div in divs)
             {
                 JsonArray infos = JsonArray.Parse(div.ToString());

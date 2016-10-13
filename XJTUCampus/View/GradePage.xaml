@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource BackgroundPanelBrush}">
-        <ListView Name="ScoreListView" ItemsSource="{x:Bind Grades}" >
+        <ListView Name="ScoreListView" ItemsSource="{x:Bind _grades}" >
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Grade">
                     <RelativePanel>

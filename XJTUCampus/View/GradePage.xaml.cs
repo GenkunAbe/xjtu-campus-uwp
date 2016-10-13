@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -18,90 +19,76 @@ using XJTUCampus.Core.Model;
 namespace XJTUCampus.View
 {
 
-    public class x
-    {
-        public static ObservableCollection<Grade> Grades { get; set; } = new ObservableCollection<Grade>();
-    }
-
-    
     public sealed partial class GradePage : Page
     {
-        public ObservableCollection<Grade> Grades
-        {
-            get { return x.Grades; }
-            set
-            {
-                x.Grades.Clear();
-                string nowTerm = "";
-                foreach (Grade grade in value)
-                {
-                    if (nowTerm != grade.Term)
-                    {
-                        if (nowTerm != "")
-                        {
-                            x.Grades.Add(new Grade("", ""));
-                        }
-                        nowTerm = grade.Term;
-                        x.Grades.Add(new Grade(nowTerm, ""));
-                    }
-                    x.Grades.Add(grade);
-                }
-            }
-        }
-        private static GradeManager _GradeManager = new GradeManager();
+        private readonly ObservableCollection<Grade> _grades;
+        private readonly GradeManager _gradeManager = new GradeManager();
+        public static GradePage This;
+
 
         public GradePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            This = this;
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            _grades = new ObservableCollection<Grade>();
         }
 
         private void App_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
         {
-
-            // Navigate back if possible, and if the event has not 
-            // already been handled .
-            if (Frame.CanGoBack && e.Handled == false)
-            {
-                e.Handled = true;
-                Frame.GoBack();
-            }
+            if (!Frame.CanGoBack || e.Handled) return;
+            e.Handled = true;
+            Frame.GoBack();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (x.Grades.Count != 0) return;
+            if (_grades.Count != 0) return;
+            GetGrades();
+        }
+
+        private async void GetGrades(bool isNew = false)
+        {
             ObservableCollection<Grade> tmp;
-            try
+            if (!isNew)
             {
-                tmp = await _GradeManager.GetStoredGrades();
+                try
+                {
+                    tmp = await _gradeManager.GetStoredGrades();
+                }
+                catch (Exception)
+                {
+                    GetGrades(true);
+                    return;
+                }
             }
-            catch (Exception)
+            else
             {
-                tmp = await _GradeManager.GetNewGrades();
+                try
+                {
+                    tmp = await _gradeManager.GetNewGrades();
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("Get Grades Failed!");
+                    return;
+                }
             }
-            if (tmp.Count == 0) tmp = await _GradeManager.GetNewGrades();
-            Grades = tmp;
-        }
-
-        public static async void Refresh()
-        {
-            var tmp = await _GradeManager.GetNewGrades();
-            x.Grades.Clear();
-            string nowTerm = "";
+            if (tmp.Count == 0)
+            {
+                Debug.WriteLine("No Grade To Show!");
+                return;
+            }
+            _grades.Clear();
             foreach (Grade grade in tmp)
             {
-                if (nowTerm != grade.Term)
-                {
-                    if (nowTerm != "")
-                    {
-                        x.Grades.Add(new Grade("", ""));
-                    }
-                    nowTerm = grade.Term;
-                    x.Grades.Add(new Grade(nowTerm, ""));
-                }
-                x.Grades.Add(grade);
+                _grades.Add(grade);
             }
+        }
+
+        public static void Refresh()
+        {
+            This.GetGrades(true);
         }
 
     }

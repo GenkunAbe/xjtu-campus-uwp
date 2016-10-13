@@ -86,26 +86,6 @@ namespace XJTUCampus.Core.Model
             return Grades;
         }
 
-        public async Task<List<VoiceCommandContentTile>> GetStoredGradesForCortana()
-        {
-            List<VoiceCommandContentTile> gradeList = new List<VoiceCommandContentTile>();
-            //ObservableCollection<Grade> grades = await GetStoredGrades();
-            for (var i = 0; i < 6; i++)
-            {
-                gradeList.Add(new VoiceCommandContentTile
-                {
-                    //AppContext = i, //用来存储该条Tile的标识  一般存储数据id
-                    ContentTileType = VoiceCommandContentTileType.TitleWithText,
-                    AppLaunchArgument = "argument",
-                    //Title = grades[i].Name,
-                    //TextLine1 = grades[i].Score
-                    Title = "123",
-                    TextLine1 = "321"
-                });
-            }
-            return gradeList;
-        }
-
         public async Task<ObservableCollection<Grade>> GetStoredGrades()
         {
             StorageFolder folder = ApplicationData.Current.LocalFolder;

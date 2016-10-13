@@ -24,14 +24,14 @@ namespace XJTUCampus.View
     public sealed partial class TablePage : Page
     {
         public ObservableCollection<string> WeekList = new ObservableCollection<string>();
-        private ObservableCollection<Course> Courses;
-        private TableManager _TableManager;
-        public static TablePage _this;
+        private ObservableCollection<Course> _courses;
+        private readonly TableManager _tableManager;
+        public static TablePage This;
         public TablePage()
         {
-            this.InitializeComponent();
-            _this = this;
-            _TableManager = new TableManager();
+            InitializeComponent();
+            This = this;
+            _tableManager = new TableManager();
 
             SetWeekList();
         }
@@ -42,16 +42,23 @@ namespace XJTUCampus.View
             WeekListCombBox.ItemsSource = WeekList;
             for (int i = 1; i <= 16; ++i)
             {
-                string item = (i < 10 ? "0" : "") + i;
+                string item = i.ToString().PadLeft(2, '0');
                 WeekList.Add(item);
                 if (i == UserData.NowWeek)
                     WeekListCombBox.SelectedItem = item;
             }
         }
 
-        private async void GetNewCourses()
+        private async void GetNewCourses(int week = -1)
         {
-            Courses = await _TableManager.GetCoursesList(UserData.NowWeek, true);
+            try
+            {
+                _courses = await _tableManager.GetCoursesList(week == -1 ? UserData.NowWeek : week, true);
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Get Table Failed!");
+            }
             SetCourses();
         }
 
@@ -62,12 +69,11 @@ namespace XJTUCampus.View
             {
 
                 Grid grid = new Grid();
-                TextBlock textBlock = new TextBlock();
+                TextBlock textBlock = new TextBlock {Style = TextBlockTileStyle};
 
-                textBlock.Style = TextBlockTileStyle;
                 grid.Style = GridTileStyle;
 
-                Course course = Courses[i];
+                Course course = _courses[i];
                 textBlock.Text = course.Name + "\n" + (course.Name == "" ? "" : course.Place.Substring(4));
 
                 grid.Children.Add(textBlock);
@@ -80,28 +86,18 @@ namespace XJTUCampus.View
 
         }
 
-        private async void WeekListCombBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void WeekListCombBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
-            if (comboBox != null)
-            {
-                try
-                {
-                    var seletedItem = comboBox.SelectedItem as string;
-                    int nowWeek = int.Parse(seletedItem);
-                    Courses = await _TableManager.GetCoursesList(nowWeek, false);
-                    SetCourses();
-                }
-                catch (Exception)
-                {
-                    Debug.WriteLine("Select Week Failed!");
-                }
-            }
+            if (comboBox == null) return;
+            string seletedItem = comboBox.SelectedItem as string;
+            int newWeek = int.Parse(seletedItem);
+            GetNewCourses(newWeek);
         }
 
         public static void Refresh()
         {
-            _this.GetNewCourses();
+            This.GetNewCourses();
         }
     }
 }
