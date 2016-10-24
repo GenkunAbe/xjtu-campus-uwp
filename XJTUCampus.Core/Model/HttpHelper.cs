@@ -17,7 +17,7 @@ namespace XJTUCampus.Core.Model
             string result = "";
 
             HttpClient httpClient = new HttpClient();
-            Uri uri = new Uri(url);
+            Uri uri = new Uri(url + "&t=" + DateTime.Now.ToFileTime());
             HttpResponseMessage response = new HttpResponseMessage();
 
             try

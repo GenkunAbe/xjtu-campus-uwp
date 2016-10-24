@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.ServiceModel.Channels;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Security.Credentials.UI;
@@ -26,8 +27,7 @@ namespace XJTUCampus.View
     {
         public CardPage()
         {
-            this.InitializeComponent();
-            LoadCaptcha();
+            InitializeComponent();
             GetWindowsHelloSetting();
         }
 
@@ -60,24 +60,14 @@ namespace XJTUCampus.View
             }
         }
 
-        private async void LoadCaptcha(bool isChange = false)
-        {
-            ChangeCaptchaButton.Visibility = Visibility.Collapsed;
-            CaptchaImg.Visibility = Visibility.Collapsed;
-            LoadingCaptchaProgressRing.IsActive = true;
-            CaptchaImg.Source = await (isChange ? CardManager.ChangeCaptcha() : CardManager.GetCaptcha());
-            LoadingCaptchaProgressRing.IsActive = false;
-            CaptchaImg.Visibility = Visibility.Visible;
-            ChangeCaptchaButton.Visibility = Visibility.Visible;
-        }
-
         private async void SubmitButton_OnClick (object sender, RoutedEventArgs e)
         {
+            ResultTextBlock.Text = "";
             string rawPsw;
+            // There is no PasswordTextBox, so do Windows Hello User Authentication
             if (PasswordTextBox.Visibility == Visibility.Collapsed)
             {
                 UserConsentVerifierAvailability consentAvailability = await UserConsentVerifier.CheckAvailabilityAsync();
-                ContentDialog dialog;
                 if (consentAvailability == UserConsentVerifierAvailability.Available)
                 {
                     UserConsentVerificationResult consentResult = await UserConsentVerifier.RequestVerificationAsync("Please Verify your identity.");
@@ -87,15 +77,7 @@ namespace XJTUCampus.View
                     }
                     else
                     {
-                        dialog = new ContentDialog()
-                        {
-                            Title = "Warning",
-                            Content = "UserConsentVerify Failed!",
-                            PrimaryButtonText = "Ok",
-                            SecondaryButtonText = "Cancel",
-                            FullSizeDesired = false,
-                        };
-                        await dialog.ShowAsync();
+                        await ShowContentDialog("Warning", "UserConsentVerify Failed!");
                         PasswordLabel.Visibility = Visibility.Visible;
                         PasswordTextBox.Visibility = Visibility.Visible;
                         return;
@@ -103,15 +85,7 @@ namespace XJTUCampus.View
                 }
                 else
                 {
-                    dialog = new ContentDialog()
-                    {
-                        Title = "Warning",
-                        Content = "UserConsentVerifier Not Available!",
-                        PrimaryButtonText = "Ok",
-                        SecondaryButtonText = "Cancel",
-                        FullSizeDesired = false,
-                    };
-                    await dialog.ShowAsync();
+                    await ShowContentDialog("Warning", "UserConsentVerifier Not Available!");
                     PasswordLabel.Visibility = Visibility.Visible;
                     PasswordTextBox.Visibility = Visibility.Visible;
                     return;
@@ -122,36 +96,34 @@ namespace XJTUCampus.View
                 rawPsw = PasswordTextBox.Password;
             }
                 
-            string code = CodeTextBox.Text;
             string amt = AmtTextBox.Text;
-            if (rawPsw == "" || code == "" || amt == "")
+            if (rawPsw == "" || amt == "")
             {
-                var dialog = new ContentDialog()
-                {
-                    Title = "Warning",
-                    Content = "Please enter all items of this form!",
-                    PrimaryButtonText = "Ok",
-                    SecondaryButtonText = "Cancel",
-                    FullSizeDesired = false,
-                };
-                await dialog.ShowAsync();
+                await ShowContentDialog("Warning", "Please enter all items of this form!");
                 PasswordLabel.Visibility = Visibility.Visible;
                 PasswordTextBox.Visibility = Visibility.Visible;
                 return;
             }
-            PayResult result = await CardManager.Pay(rawPsw, code, amt);
-
-            LoadCaptcha(true);
-            if (!result.ret)
-            {
-                CodeTextBox.Text = "";
-            }
+            SubmitButton.IsEnabled = false;
+            PayProcessingRing.IsActive = true;
+            PayResult result = await CardManager.Pay(rawPsw, amt);
+            PayProcessingRing.IsActive = false;
+            SubmitButton.IsEnabled = true;
             ResultTextBlock.Text = result.msg;
         }
 
-        private void ButtonCaptcha_OnClick(object sender, RoutedEventArgs e)
+        private static async Task<bool> ShowContentDialog(String title, String content)
         {
-            LoadCaptcha(true);
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = title,
+                Content = content,
+                PrimaryButtonText = "Ok",
+                SecondaryButtonText = "Cancel",
+                FullSizeDesired = false,
+            };
+            await dialog.ShowAsync();
+            return true;
         }
     }
 }
