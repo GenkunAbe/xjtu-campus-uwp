@@ -32,6 +32,11 @@ namespace XJTUCampus.Core.Model
         public string balance { get; set; }
         public string temp { get; set; }
         public string freeze { get; set; }
+
+        public CardInfo()
+        {
+            loss = balance = temp = freeze = "-1";
+        }
     }
 
     public class CardManager
@@ -57,9 +62,16 @@ namespace XJTUCampus.Core.Model
         public static async Task<CardInfo> GetCardInfo()
         {
             string uri = UserData.Host + "cardinfo?usr=" + UserData.NetId + "&psw=" + UserData.Psw;
-            string resultString = await HttpHelper.GetResponse(uri);
-            var result = JsonConvert.DeserializeObject<CardInfo>(resultString);
-            return result;
+            try
+            {
+                string resultString = await HttpHelper.GetResponse(uri);
+                CardInfo result = JsonConvert.DeserializeObject<CardInfo>(resultString);
+                return result;
+            }
+            catch (Exception)
+            {
+                return new CardInfo();
+            }
         }
 
     }

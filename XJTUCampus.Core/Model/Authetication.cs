@@ -15,10 +15,17 @@ namespace XJTUCampus.Core.Model
         public static async Task<bool> LoginAutheticate(string netId, string psw)
         {
             string uri = UserData.Host + "auth?usr=" + netId + "&psw=" + psw;
-            string result = await HttpHelper.GetResponse(uri);
+            string result;
+            try
+            {
+                result = await HttpHelper.GetResponse(uri);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
             JsonArray arr = JsonArray.Parse(result);
-            string auth = arr[0].GetString();
-            return auth == "True";
+            return arr[0].GetString() == "True";
         }
 
         public static async Task<bool> AutoLoginAutheticate()

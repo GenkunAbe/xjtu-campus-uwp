@@ -91,12 +91,12 @@ namespace XJTUCampus.Core.Model
             Course[,] tmpCourses = new Course[5, 5];
             ObservableCollection<Course> rawCourse = new ObservableCollection<Course>();
             if (isNew)
-                rawCourse = await GetNewRawCourses();
+                rawCourse = await GetNewCourses();
             else
                 rawCourse = await GetStoredRawCourses();
 
             if (isNew && _rawCourse == "") return GetInitCourses();
-            if (!isNew && _rawCourse == "") rawCourse = await GetNewRawCourses();
+            if (!isNew && _rawCourse == "") rawCourse = await GetNewCourses();
 
             foreach (Course course in rawCourse)
             {
@@ -113,11 +113,17 @@ namespace XJTUCampus.Core.Model
         }
 
 
-        private async Task<ObservableCollection<Course>> GetNewRawCourses()
+        private async Task<ObservableCollection<Course>> GetNewCourses()
         {
             string uri = UserData.Host + "table?usr=" + UserData.NetId + "&psw=" + UserData.Psw;
-            _rawCourse = await HttpHelper.GetResponse(uri);
-
+            try
+            {
+                _rawCourse = await HttpHelper.GetResponse(uri);
+            }
+            catch (Exception)
+            {
+                return await GetStoredRawCourses();
+            }
 
             StorageFolder folder = ApplicationData.Current.LocalFolder;
             StorageFile tableFile;
@@ -138,7 +144,6 @@ namespace XJTUCampus.Core.Model
             {
                 Debug.WriteLine("Write Table File Failed!");
             }
-
 
             return JsonCourseParser();
         }

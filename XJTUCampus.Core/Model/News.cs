@@ -65,7 +65,14 @@ namespace XJTUCampus.Core.Model
         public async Task<ObservableCollection<NewsGlance>> GetNewNewsList()
         {
             string uri = UserData.Host + "news";
-            RawNews = await HttpHelper.GetResponse(uri);
+            try
+            {
+                RawNews = await HttpHelper.GetResponse(uri);
+            }
+            catch (Exception)
+            {
+                RawNews = "[-1]";
+            }
             NewsList.Clear();
             JsonNewsParser();
             Save();
@@ -89,10 +96,17 @@ namespace XJTUCampus.Core.Model
 
         private void JsonNewsParser()
         {
-            JsonArray lines = JsonArray.Parse(RawNews);
-            foreach (IJsonValue line in lines)
+            if (RawNews == "[-1]")
             {
-                NewsList.Add(new NewsGlance(line));
+                NewsList.Add(new NewsGlance("", "获取新闻遇到错误！", ""));
+            }
+            else
+            {
+                JsonArray lines = JsonArray.Parse(RawNews);
+                foreach (IJsonValue line in lines)
+                {
+                    NewsList.Add(new NewsGlance(line));
+                }
             }
         }
     }

@@ -58,7 +58,10 @@ namespace XJTUCampus.View
         private void BookGlanceItem_OnClick(object sender, ItemClickEventArgs e)
         {
             BookGlance book = (BookGlance) e.ClickedItem;
-            Frame?.Navigate(typeof(BookDetailPage), book?.Link);
+            if (book?.Link != "")
+            {
+                Frame?.Navigate(typeof(BookDetailPage), book?.Link);
+            }
         }
     }
 }

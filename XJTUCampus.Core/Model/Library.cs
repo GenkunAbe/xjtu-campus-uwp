@@ -62,6 +62,13 @@ namespace XJTUCampus.Core.Model
                 Status.Add(new BookStatus(line));
             }
         }
+
+        public BookDetail(bool isInitError)
+        {
+            Name = isInitError ? "未知错误！" : "返回 0 条结果。";
+            Author = Press = "";
+            Status = new ObservableCollection<BookStatus>();
+        }
     }
 
     public class LibraryManager
@@ -69,15 +76,21 @@ namespace XJTUCampus.Core.Model
         public static async Task<ObservableCollection<BookGlance>> GetBookGlanceList(string arg)
         {
             string uri = UserData.Host + "booksearch?arg=" + arg;
-            string result = await HttpHelper.GetResponse(uri);
-
             ObservableCollection<BookGlance> list = new ObservableCollection<BookGlance>();
-            JsonArray lines = JsonArray.Parse(result);
-            foreach (IJsonValue line in lines)
+            try
             {
-                JsonArray items = JsonArray.Parse(line.ToString());
-                BookGlance book = new BookGlance(items[0].GetString(), items[1].GetString());
-                list.Add(book);
+                string result = await HttpHelper.GetResponse(uri);
+                JsonArray lines = JsonArray.Parse(result);
+                foreach (IJsonValue line in lines)
+                {
+                    JsonArray items = JsonArray.Parse(line.ToString());
+                    BookGlance book = new BookGlance(items[0].GetString(), items[1].GetString());
+                    list.Add(book);
+                }
+            }
+            catch (Exception)
+            {
+                list.Add(new BookGlance("", "搜索遇到问题"));
             }
             return list;
         }
@@ -85,15 +98,29 @@ namespace XJTUCampus.Core.Model
         public static async Task<ObservableCollection<BookDetail>> GetBookDetail(string link)
         {
             string uri = "http://202.117.14.143:12000/bookdetail?link=" + link;
-            string result = await HttpHelper.GetResponse(uri);
-
             ObservableCollection<BookDetail> Details = new ObservableCollection<BookDetail>();
-            JsonArray lines = JsonArray.Parse(result);
-            // 待解决: result可能为空
-            foreach (IJsonValue line in lines)
+            try
             {
-                JsonArray items = JsonArray.Parse(line.ToString());
-                Details.Add(new BookDetail(items));
+                string result = await HttpHelper.GetResponse(uri);
+                JsonArray lines = JsonArray.Parse(result);
+
+                // if the list of response is not empty
+                if (lines.Any())
+                {
+                    foreach (IJsonValue line in lines)
+                    {
+                        JsonArray items = JsonArray.Parse(line.ToString());
+                        Details.Add(new BookDetail(items));
+                    }
+                }
+                else
+                {
+                    Details.Add(new BookDetail(false));
+                }
+            }
+            catch (Exception)
+            {
+                Details.Add(new BookDetail(true));
             }
             return Details;
         }

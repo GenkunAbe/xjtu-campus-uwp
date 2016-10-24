@@ -56,7 +56,11 @@ namespace XJTUCampus.View
         private async void NewsListItem_OnClick(object sender, ItemClickEventArgs e)
         {
             NewsGlance news = (NewsGlance) e.ClickedItem;
-            string link = news.Link;
+            string link = news?.Link;
+            if (link == "")
+            {
+                return;
+            }
             if (!link.StartsWith("http"))
                 link = "http://dean.xjtu.edu.cn" + link;
             Uri uri = new Uri(link);
