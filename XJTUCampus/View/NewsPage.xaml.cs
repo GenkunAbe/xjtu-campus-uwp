@@ -18,46 +18,58 @@ using XJTUCampus.Core.Model;
 
 namespace XJTUCampus.View
 {
-    public class News
-    {
-        public static ObservableCollection<NewsGlance> GlanceList { get; set; } = new ObservableCollection<NewsGlance>();
-    }
-
     public sealed partial class NewsPage : Page
     {
-        private ObservableCollection<NewsGlance> NewsList
-        {
-            get { return News.GlanceList; }
-            set
-            {
-                News.GlanceList.Clear();
-                foreach (NewsGlance newsGlance in value)
-                {
-                    News.GlanceList.Add(newsGlance);
-                }
-            }
-        }
-        private static NewsManager _NewsManager = new NewsManager();
+        public static NewsPage This;
+        private static readonly NewsManager NewsManager = new NewsManager();
+
+        private readonly ObservableCollection<NewsGlance> _newsList;
+        
 
         public NewsPage()
         {
-            this.InitializeComponent();
-            NewsList = News.GlanceList;
-            GetStoredNewsList();
+            InitializeComponent();
+            This = this;
+            _newsList = new ObservableCollection<NewsGlance>();
+
+            if (UserData.News == null || UserData.News.Count == 0)
+            {
+                GetStoredNewsList();
+                UserData.News = _newsList;
+            }
+            else
+            {
+                UpdateNewsList(UserData.News);
+            }
+            
         }
 
         private async void GetStoredNewsList()
         {
-            NewsList = await _NewsManager.GetStoredNewsList();
-            if (NewsList.Count == 0)
-                Refresh();
+            UpdateNewsList(await NewsManager.GetStoredNewsList());
+            if (_newsList.Count == 0)
+                GetNewNewsList();
+        }
+
+        private async void GetNewNewsList()
+        {
+            UpdateNewsList(await NewsManager.GetNewNewsList());
+        }
+
+        private void UpdateNewsList(ObservableCollection<NewsGlance> list)
+        {
+            _newsList.Clear();
+            foreach (NewsGlance glance in list)
+            {
+                _newsList.Add(glance);
+            }
         }
 
         private async void NewsListItem_OnClick(object sender, ItemClickEventArgs e)
         {
             NewsGlance news = (NewsGlance) e.ClickedItem;
             string link = news?.Link;
-            if (link == "")
+            if (string.IsNullOrEmpty(link))
             {
                 return;
             }
@@ -67,15 +79,9 @@ namespace XJTUCampus.View
             await Windows.System.Launcher.LaunchUriAsync(uri);
         }
 
-        public static async void Refresh()
+        public static void Refresh()
         {
-            var tmp = await _NewsManager.GetNewNewsList();
-
-            News.GlanceList.Clear();
-            foreach (NewsGlance newsGlance in tmp)
-            {
-                News.GlanceList.Add(newsGlance);
-            }
+            This.GetNewNewsList();
         }
 
     }

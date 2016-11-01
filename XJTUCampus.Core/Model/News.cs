@@ -37,12 +37,12 @@ namespace XJTUCampus.Core.Model
 
     public class NewsManager
     {
-        private string RawNews;
+        private string _rawNews;
         private ObservableCollection<NewsGlance> NewsList;
 
         public NewsManager()
         {
-            RawNews = "";
+            _rawNews = "";
             NewsList = new ObservableCollection<NewsGlance>();
         }
 
@@ -52,7 +52,7 @@ namespace XJTUCampus.Core.Model
             try
             {
                 StorageFile newsFile = await folder.GetFileAsync("news");
-                RawNews = await FileIO.ReadTextAsync(newsFile);
+                _rawNews = await FileIO.ReadTextAsync(newsFile);
                 JsonNewsParser();
                 return NewsList;
             }
@@ -64,14 +64,14 @@ namespace XJTUCampus.Core.Model
 
         public async Task<ObservableCollection<NewsGlance>> GetNewNewsList()
         {
-            string uri = UserData.Host + "news";
+            string uri = UserData.Host + "news?";
             try
             {
-                RawNews = await HttpHelper.GetResponse(uri);
+                _rawNews = await HttpHelper.GetResponse(uri);
             }
             catch (Exception)
             {
-                RawNews = "[-1]";
+                _rawNews = "[-1]";
             }
             NewsList.Clear();
             JsonNewsParser();
@@ -91,18 +91,18 @@ namespace XJTUCampus.Core.Model
             {
                 newsFile = await folder.CreateFileAsync("news");
             }
-            await FileIO.WriteTextAsync(newsFile, RawNews);
+            await FileIO.WriteTextAsync(newsFile, _rawNews);
         }
 
         private void JsonNewsParser()
         {
-            if (RawNews == "[-1]")
+            if (_rawNews == "[-1]")
             {
                 NewsList.Add(new NewsGlance("", "获取新闻遇到错误！", ""));
             }
             else
             {
-                JsonArray lines = JsonArray.Parse(RawNews);
+                JsonArray lines = JsonArray.Parse(_rawNews);
                 foreach (IJsonValue line in lines)
                 {
                     NewsList.Add(new NewsGlance(line));

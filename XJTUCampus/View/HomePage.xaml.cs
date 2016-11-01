@@ -19,15 +19,18 @@ namespace XJTUCampus.View
 {
     public sealed partial class HomePage : Page
     {
+        public static HomePage This;
+
         public ObservableCollection<NewsGlance> NewsList = new ObservableCollection<NewsGlance>();
         public ObservableCollection<Grade> GradeList = new ObservableCollection<Grade>();
-        private NewsManager newsManager = new NewsManager();
-        private GradeManager gradeManager = new GradeManager();
-        private TableManager tableManager = new TableManager();
-        //private NewsManager newsManager = new NewsManager();
+
+        private readonly NewsManager _newsManager = new NewsManager();
+        private readonly GradeManager _gradeManager = new GradeManager();
+        private readonly TableManager _tableManager = new TableManager();
         public HomePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            This = this;
             GetNewsGlanceList();
             GetGradeList();
             GetCardInfo();
@@ -37,9 +40,9 @@ namespace XJTUCampus.View
 
         private async void GetNewsGlanceList()
         {
-            ObservableCollection<NewsGlance> tmp = await newsManager.GetStoredNewsList();
+            ObservableCollection<NewsGlance> tmp = await _newsManager.GetStoredNewsList();
             if (tmp.Count == 0)
-                tmp = await newsManager.GetNewNewsList();
+                tmp = await _newsManager.GetNewNewsList();
             NewsList.Clear();
             foreach (NewsGlance glance in tmp)
             {
@@ -50,9 +53,9 @@ namespace XJTUCampus.View
 
         private async void GetGradeList()
         {
-            ObservableCollection<Grade> tmp = await gradeManager.GetStoredGrades();
+            ObservableCollection<Grade> tmp = await _gradeManager.GetStoredGrades();
             if (tmp.Count == 0)
-                tmp = await gradeManager.GetNewGrades();
+                tmp = await _gradeManager.GetNewGrades();
             GradeList.Clear();
             foreach (Grade grade in tmp)
             {
@@ -62,7 +65,7 @@ namespace XJTUCampus.View
 
         private async void GetTable()
         {
-            ObservableCollection<Course> courses = await tableManager.GetTodayCourse();
+            ObservableCollection<Course> courses = await _tableManager.GetTodayCourse();
             FirCourse.Text = courses[0].Name == "" ? "Free" : courses[0].Name;
             SecCourse.Text = courses[1].Name == "" ? "Free" : courses[1].Name;
             ThiCourse.Text = courses[2].Name == "" ? "Free" : courses[2].Name;
@@ -73,7 +76,6 @@ namespace XJTUCampus.View
         {
             CardInfo info = await CardManager.GetCardInfo();
             BalanceTextBlock.Text = info.balance;
-//            BalanceTextBlock.Text = await CardManager.GetCardInfoString();
         }
     }
 }

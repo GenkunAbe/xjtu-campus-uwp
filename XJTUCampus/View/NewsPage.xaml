@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Row="0">
-            <ListView Name="NewsGlanceListView" ItemsSource="{x:Bind NewsList}" IsItemClickEnabled="True" ItemClick="NewsListItem_OnClick">
+            <ListView Name="NewsGlanceListView" ItemsSource="{x:Bind _newsList}" IsItemClickEnabled="True" ItemClick="NewsListItem_OnClick">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:NewsGlance">
                         <RelativePanel>

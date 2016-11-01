@@ -41,21 +41,18 @@ namespace XJTUCampus.View
                 bool isHelloOn = Boolean.Parse(helloFileString);
                 if (isHelloOn)
                 {
-                    PasswordLabel.Visibility = Visibility.Collapsed;
-                    PasswordTextBox.Visibility = Visibility.Collapsed;
+                    PasswordGrid.Visibility = Visibility.Collapsed;
                     StorageFile payFile = await folder.GetFileAsync("pay");
                     UserData.PayPsw = await FileIO.ReadTextAsync(payFile);
                 }
                 else
                 {
-                    PasswordLabel.Visibility = Visibility.Visible;
-                    PasswordTextBox.Visibility = Visibility.Visible;
+                    PasswordGrid.Visibility = Visibility.Visible;
                 }
             }
             catch (Exception)
             {
-                PasswordLabel.Visibility = Visibility.Visible;
-                PasswordTextBox.Visibility = Visibility.Visible;
+                PasswordGrid.Visibility = Visibility.Visible;
                 Debug.WriteLine("Getting Setting Failed!");
             }
         }
@@ -65,7 +62,7 @@ namespace XJTUCampus.View
             ResultTextBlock.Text = "";
             string rawPsw;
             // There is no PasswordTextBox, so do Windows Hello User Authentication
-            if (PasswordTextBox.Visibility == Visibility.Collapsed)
+            if (PasswordGrid.Visibility == Visibility.Collapsed)
             {
                 UserConsentVerifierAvailability consentAvailability = await UserConsentVerifier.CheckAvailabilityAsync();
                 if (consentAvailability == UserConsentVerifierAvailability.Available)
@@ -78,16 +75,14 @@ namespace XJTUCampus.View
                     else
                     {
                         await ShowContentDialog("Warning", "UserConsentVerify Failed!");
-                        PasswordLabel.Visibility = Visibility.Visible;
-                        PasswordTextBox.Visibility = Visibility.Visible;
+                        PasswordGrid.Visibility = Visibility.Visible;
                         return;
                     }
                 }
                 else
                 {
                     await ShowContentDialog("Warning", "UserConsentVerifier Not Available!");
-                    PasswordLabel.Visibility = Visibility.Visible;
-                    PasswordTextBox.Visibility = Visibility.Visible;
+                    PasswordGrid.Visibility = Visibility.Visible;
                     return;
                 }
             }
@@ -100,8 +95,7 @@ namespace XJTUCampus.View
             if (rawPsw == "" || amt == "")
             {
                 await ShowContentDialog("Warning", "Please enter all items of this form!");
-                PasswordLabel.Visibility = Visibility.Visible;
-                PasswordTextBox.Visibility = Visibility.Visible;
+                PasswordGrid.Visibility = Visibility.Visible;
                 return;
             }
             SubmitButton.IsEnabled = false;
