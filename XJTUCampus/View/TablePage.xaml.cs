@@ -49,11 +49,11 @@ namespace XJTUCampus.View
             }
         }
 
-        private async void GetNewCourses(int week = -1)
+        private async void GetCourses(bool isNew, int week = -1)
         {
             try
             {
-                _courses = await _tableManager.GetCoursesList(week == -1 ? UserData.NowWeek : week, true);
+                _courses = await _tableManager.GetCoursesList(week == -1 ? UserData.NowWeek : week, isNew);
             }
             catch (Exception)
             {
@@ -92,12 +92,12 @@ namespace XJTUCampus.View
             if (comboBox == null) return;
             string seletedItem = comboBox.SelectedItem as string;
             int newWeek = int.Parse(seletedItem);
-            GetNewCourses(newWeek);
+            GetCourses(false, newWeek);
         }
 
         public static void Refresh()
         {
-            This.GetNewCourses();
+            This.GetCourses(true);
         }
     }
 }

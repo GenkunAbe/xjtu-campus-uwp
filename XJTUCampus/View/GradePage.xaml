@@ -9,6 +9,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource BackgroundPanelBrush}">
+        <ProgressRing Name="GradeRefreshProgressRing" Grid.Row="0" Grid.Column="0"/>
         <ListView Name="ScoreListView" ItemsSource="{x:Bind _grades}" >
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Grade">

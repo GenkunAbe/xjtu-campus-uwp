@@ -49,6 +49,7 @@ namespace XJTUCampus.View
 
         private async void GetGrades(bool isNew = false)
         {
+            GradeRefreshProgressRing.IsActive = true;
             ObservableCollection<Grade> tmp;
             if (!isNew)
             {
@@ -71,12 +72,14 @@ namespace XJTUCampus.View
                 catch (Exception)
                 {
                     Debug.WriteLine("Get Grades Failed!");
+                    GradeRefreshProgressRing.IsActive = false;
                     return;
                 }
             }
             if (tmp.Count == 0)
             {
                 Debug.WriteLine("No Grade To Show!");
+                GradeRefreshProgressRing.IsActive = false;
                 return;
             }
             _grades.Clear();
@@ -84,6 +87,7 @@ namespace XJTUCampus.View
             {
                 _grades.Add(grade);
             }
+            GradeRefreshProgressRing.IsActive = false;
         }
 
         public static void Refresh()

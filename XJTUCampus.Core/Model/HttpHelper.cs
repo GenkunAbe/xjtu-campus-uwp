@@ -1,58 +1,62 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using Windows.Web.Http;
-using System.Text;
+using Windows.Web.Http.Filters;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.Security.Cryptography.Certificates;
+
 
 namespace XJTUCampus.Core.Model
 {
     public class HttpHelper
     {
+
         public static async Task<string> GetResponse(string url)
+
         {
-            string result = "";
-
-            HttpClient httpClient = new HttpClient();
-            Uri uri = new Uri(url + "&t=" + DateTime.Now.ToFileTime());
-            HttpResponseMessage response = new HttpResponseMessage();
-
-            try
-            {
-                response = await httpClient.GetAsync(uri);
-                result = await response.Content.ReadAsStringAsync();
-            }
-            catch (Exception)
-            {
-                result = "Error!";
-            }
-
-            return result;
+            string retVal = "";
+            HttpResponseMessage response = await GetHttpsResponse(url);
+            retVal = await response.Content.ReadAsStringAsync();
+            return retVal;
         }
 
         public static async Task<BitmapImage> GetImage(string url)
         {
             BitmapImage bitmap = new BitmapImage();
-            HttpClient httpClient = new HttpClient();
-            try
+            HttpResponseMessage response = await GetHttpsResponse(url);
+            using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
             {
-                HttpResponseMessage response = await httpClient.GetAsync(new Uri(url));
-                using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
-                {
-                    await response.Content.WriteToStreamAsync(stream);
-                    stream.Seek(0ul);
-                    bitmap.SetSource(stream);
-                }
-
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("Get Image Error!");
+                await response.Content.WriteToStreamAsync(stream);
+                stream.Seek(0ul);
+                bitmap.SetSource(stream);
             }
             return bitmap;
         }
+
+        private static async Task<HttpResponseMessage> GetHttpsResponse(string url)
+        {
+            Uri theUri = new Uri(url);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, theUri);
+            HttpBaseProtocolFilter httpBaseProtocolFilter = new HttpBaseProtocolFilter();
+            httpBaseProtocolFilter.IgnorableServerCertificateErrors.Add(ChainValidationResult.Expired);
+            httpBaseProtocolFilter.IgnorableServerCertificateErrors.Add(ChainValidationResult.Untrusted);
+            httpBaseProtocolFilter.IgnorableServerCertificateErrors.Add(ChainValidationResult.InvalidName);
+
+            HttpResponseMessage resp = null;
+            try
+            {
+                HttpClient httpClient = new HttpClient(httpBaseProtocolFilter);
+                HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, theUri);
+                resp = await httpClient.SendRequestAsync(req);
+            }
+            catch (Exception ex2)
+            {
+                Debug.WriteLine(ex2.Message);
+            }
+            return resp;
+        }
+
     }
 }

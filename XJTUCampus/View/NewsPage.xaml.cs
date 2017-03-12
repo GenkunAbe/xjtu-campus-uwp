@@ -74,7 +74,7 @@ namespace XJTUCampus.View
                 return;
             }
             if (!link.StartsWith("http"))
-                link = "http://dean.xjtu.edu.cn" + link;
+                link = "http://dean.xjtu.edu.cn/" + link;
             Uri uri = new Uri(link);
             await Windows.System.Launcher.LaunchUriAsync(uri);
         }

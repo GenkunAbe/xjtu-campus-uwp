@@ -29,9 +29,9 @@ namespace XJTUCampus.Core.Model
         public NewsGlance (IJsonValue item)
         {
             JsonArray values = JsonArray.Parse(item.ToString());
-            Link = values[0].GetString();
-            Title = values[1].GetString();
-            Date = values[2].GetString();
+            Link = values[1].GetString();
+            Title = values[2].GetString();
+            Date = values[0].GetString();
         }
     }
 
